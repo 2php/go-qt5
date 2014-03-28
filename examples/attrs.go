@@ -98,6 +98,7 @@ func fnPaint(ev *qt5.PaintEvent, w *qt5.Widget) {
 	p.Begin(w)
 	p.DrawPoint(qt5.Pt(10, 10))
 	p.DrawLine(qt5.Pt(10, 10), qt5.Pt(100, 100))
+	p.DrawLineF(qt5.PtF(100.0, 20.0), qt5.PtF(100.0, 100.0))
 	p.End()
 }
 

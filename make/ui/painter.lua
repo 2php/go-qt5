@@ -20,6 +20,7 @@ End()
 DrawPoint(pt Point)
 DrawPoints(pts []Point)
 DrawLine(pt1 Point, pt2 Point)
+DrawLineF(pt1 PointF, pt2 PointF)
 DrawLines(pts []Point)
 DrawPolyline(pts []Point)
 DrawPolygon(pts []Point)
@@ -71,6 +72,7 @@ Brush = "brush",
 DrawPoint = "drawPoint",
 DrawPoints = "drawPoints",
 DrawLine = "drawLine",
+DrawLineF = "drawLine",
 DrawLines = "drawLines",
 DrawPolyline = "drawPolyline",
 DrawPolygon = "drawPolygon",
