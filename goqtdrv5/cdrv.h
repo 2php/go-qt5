@@ -172,6 +172,15 @@ inline QPoint drvGetPoint(void *param)
     return QPoint(h->x,h->y);
 }
 
+inline QPointF drvGetPointF(void *param)
+{
+    if (param == 0) {
+        return QPointF();
+    }
+    pointf_head *h = (pointf_head*)param;
+    return QPointF(h->x,h->y);
+}
+
 inline QVector<QPoint> drvGetPointArray(void *param)
 {
     if (param == 0) {
