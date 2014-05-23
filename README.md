@@ -1,11 +1,15 @@
 #go-qt5
-=====
 
 ##Before you start
 This is a fork of visualfc's qt4 bindings, and several critical bugs are inherited along the way. Until these bugs are fixed, **this package is not recommended for any real use**.
 I don't have any time to actively work on this project, but I'll keep reviewing and merging pull requests.
 
 Meanwhile, have a look at [QML bindings for Go](https://github.com/niemeyer/qml).
+
+##Before filing an issue
+* Please read the above section first.
+* Make sure it's specifically about the go-qt5 wrappers, and not "how do I do XYZ in Qt?". Such questions are better placed in [Qt5 forums](http://qt-project.org/forums).
+* If you find that go-qt5 lacks the wrapper for a particular class you need, feel free to send a patch.
 
 ##Introduction
 go-qt5 provides with qt5 bindings for Go programming language, based on visualfc's go-ui library.
