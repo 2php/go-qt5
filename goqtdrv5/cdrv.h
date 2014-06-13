@@ -331,7 +331,7 @@ inline QSystemTrayIcon::MessageIcon drvGetMessageIconType(void *param)
 
 inline Qt::Alignment drvGetAlignment(void *param)
 {
-    return (Qt::Alignment)(*(goInt*)param);
+    return (Qt::Alignment)(int)(*(goInt*)param);
 }
 
 inline void drvSetAlignment(void *param,Qt::Alignment value)
