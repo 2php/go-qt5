@@ -17,6 +17,7 @@ require "ui.tabwidget"
 require "ui.toolbox"
 
 require "ui.dialog"
+require "ui.messagebox"
 
 require "ui.baselayout"
 require "ui.boxlayout"
@@ -112,6 +113,7 @@ function make()
 		def(label)
 		def(groupbox)
 		def(dialog)
+		def(messagebox)
 
 		def(combobox)
 		def(lineedit)
