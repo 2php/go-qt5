@@ -22,7 +22,6 @@ const (
 	PasswordEchoOnEdit
 )
 
-
 type Alignment int
 
 const (
@@ -143,6 +142,32 @@ const (
 	Information
 	Warning
 	Critical
+	Question
+)
+
+type StandardButton int
+type StandardButtons int
+
+const (
+	OkButton              StandardButton = 0x00000400
+	OpenButton            StandardButton = 0x00002000
+	SaveButton            StandardButton = 0x00000800
+	CancelButton          StandardButton = 0x00400000
+	CloseButton           StandardButton = 0x00200000
+	DiscardButton         StandardButton = 0x00800000
+	ApplyButton           StandardButton = 0x02000000
+	ResetButton           StandardButton = 0x04000000
+	RestoreDefaultsButton StandardButton = 0x08000000
+	HelpButton            StandardButton = 0x01000000
+	SaveAllButton         StandardButton = 0x00001000
+	YesButton             StandardButton = 0x00004000
+	YesToAllButton        StandardButton = 0x00008000
+	NoMessageButton       StandardButton = 0x00010000
+	NoToAllButton         StandardButton = 0x00020000
+	AbortButton           StandardButton = 0x00040000
+	RetryButton           StandardButton = 0x00080000
+	IgnoreButton          StandardButton = 0x00100000
+	InvalidButton         StandardButton = 0x00000000
 )
 
 type ToolButtonStyle int
