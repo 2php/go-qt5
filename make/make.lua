@@ -31,6 +31,8 @@ require "ui.checkbox"
 require "ui.radio"
 require "ui.toolbutton"
 
+require "ui.basespinbox"
+
 require "ui.frame"
 require "ui.label"
 
@@ -108,6 +110,8 @@ function make()
 		def(checkbox)
 		def(radio)
 		def(toolbutton)
+
+		def(basespinbox)
 
 		def(frame)
 		def(label)
