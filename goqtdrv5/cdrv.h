@@ -330,6 +330,16 @@ inline QSystemTrayIcon::MessageIcon drvGetMessageIconType(void *param)
     return QSystemTrayIcon::MessageIcon(*(goInt*)param);
 }
 
+inline QMessageBox::Icon drvGetMessageBoxIcon(void *param)
+{
+    return QMessageBox::Icon(*(goInt*)param);
+}
+
+inline void drvSetMessageBoxIcon(void *param, QMessageBox::Icon value)
+{
+    *(goInt*)param = value;
+}
+
 inline QMessageBox::StandardButtons drvGetStandardButtons(void *param)
 {
     return (QMessageBox::StandardButtons)(int)(*(goInt*)param);

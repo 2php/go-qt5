@@ -142,8 +142,9 @@ const (
 	Information
 	Warning
 	Critical
-	Question
 )
+
+type MessageBoxIcon MessageIconType
 
 type StandardButton int
 type StandardButtons int

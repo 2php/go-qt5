@@ -14,6 +14,8 @@ funcs = [[
 @ DetailedText()(text string)
 @ SetStandardButtons(buttons StandardButtons)
 @ StandardButtons()(buttons StandardButtons)
+@ SetIcon(icon MessageBoxIcon)
+@ Icon()(icon MessageBoxIcon)
 
 ]]
 
@@ -33,5 +35,7 @@ SetDetailedText = "setDetailedText",
 DetailedText = "detailedText",
 SetStandardButtons = "setStandardButtons",
 StandardButtons = "standardButtons",
+SetIcon = "setIcon",
+Icon = "icon",
 
 }
