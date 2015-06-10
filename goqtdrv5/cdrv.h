@@ -447,6 +447,11 @@ inline QWidget* drvGetWidget(void *param)
     return (QWidget*)((handle_head*)param)->native;
 }
 
+inline void drvSetWidget(void *param, QWidget *widget)
+{
+    drvSetHandle(param, widget);
+}
+
 inline QLayout* drvGetLayout(void *param)
 {
     if (param == 0) {

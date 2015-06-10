@@ -15,6 +15,8 @@ InsertItem(index int,item *ListWidgetItem)
 EditItem(item *ListWidgetItem)
 TakeItem(row int) (item *ListWidgetItem)
 Item(row int) (item *ListWidgetItem)
+SetItemWidget(item *ListWidgetItem, widget *Widget)
+ItemWidget(item *ListWidgetItem)(widget *Widget)
 Clear()
 * OnCurrentItemChanged(fn func(*ListWidgetItem,*ListWidgetItem))
 * OnCurrentRowChanged(fn func(int))
@@ -34,6 +36,7 @@ name = "QListWidget *",
 Init = [[
 drvNewObj(a0,new QListWidget);
 ]],
+
 OnCurrentItemChanged = [[
 QObject::connect(self,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),drvNewSignal(self,a1,a2),SLOT(call(QListWidgetItem*,QListWidgetItem*)));
 ]],
