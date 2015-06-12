@@ -7,6 +7,8 @@ funcs = [[
 + Init()
 
 @ CleanText()(text string)
+@ SetDecimals(value int)
+@ Decimals()(value int)
 @ SetMaximum(value float64)
 @ Maximum()(value float64)
 @ SetMinimum(value float64)
@@ -27,14 +29,16 @@ SetRange(max float64, min float64)
 ]]
 
 qtdrv = {
-inc = "<QSpinBox>",
-name = "QSpinBox *",
+inc = "<QDoubleSpinBox>",
+name = "QDoubleSpinBox *",
 
 Init = [[
-drvNewObj(a0,new QSpinBox);
+drvNewObj(a0,new QDoubleSpinBox);
 ]],
 
 CleanText = "cleanText",
+SetDecimals = "setDecimals",
+Decimals = "decimals",
 SetMaximum = "setMaximum",
 Maximum = "maximum",
 SetMinimum = "setMinimum",
