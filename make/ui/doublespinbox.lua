@@ -1,28 +1,26 @@
-module("spinbox")
+module("doublespinbox")
 
-name = "SpinBox"
+name = "DoubleSpinBox"
 base = "baseSpinBox"
 
 funcs = [[
 + Init()
 
 @ CleanText()(text string)
-@ SetDisplayIntegerBase(base int)
-@ DisplayIntegerBase()(base int)
-@ SetMaximum(value int)
-@ Maximum()(value int)
-@ SetMinimum(value int)
-@ Minimum()(value int)
+@ SetMaximum(value float64)
+@ Maximum()(value float64)
+@ SetMinimum(value float64)
+@ Minimum()(value float64)
 @ SetPrefix(prefix string)
 @ Prefix()(prefix string)
-@ SetSingleStep(step int)
-@ SingleStep()(step int)
+@ SetSingleStep(step float64)
+@ SingleStep()(step float64)
 @ SetSuffix(suffix string)
 @ Suffix()(suffix string)
-@ Value()(value int)
-@ SetValue(value int)
+@ Value()(value float64)
+@ SetValue(value float64)
 
-SetRange(max int, min int)
+SetRange(max float64, min float64)
 
 * OnValueChanged(fn func())
 
@@ -37,8 +35,6 @@ drvNewObj(a0,new QSpinBox);
 ]],
 
 CleanText = "cleanText",
-SetDisplayIntegerBase = "setDisplayIntegerBase",
-DisplayIntegerBase = "displayIntegerBase",
 SetMaximum = "setMaximum",
 Maximum = "maximum",
 SetMinimum = "setMinimum",
@@ -54,7 +50,7 @@ SetValue = "setValue",
 SetRange = "setRange",
 
 OnValueChanged = [[
-QObject::connect(self,SIGNAL(valueChanged(int)),drvNewSignal(self,a1,a2),SLOT(call(int)));
+QObject::connect(self,SIGNAL(valueChanged(double)),drvNewSignal(self,a1,a2),SLOT(call(double)));
 ]],
 
 }

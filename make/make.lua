@@ -33,6 +33,7 @@ require "ui.toolbutton"
 
 require "ui.basespinbox"
 require "ui.spinbox"
+require "ui.doublespinbox"
 
 require "ui.frame"
 require "ui.label"
@@ -114,6 +115,7 @@ function make()
 
 		def(basespinbox)
 		def(spinbox)
+		def(doublespinbox)
 
 		def(frame)
 		def(label)
