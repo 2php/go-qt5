@@ -33,6 +33,7 @@
 #include <QDebug>
 #include <QSizePolicy>
 #include <QLineEdit>
+#include <QMessageBox>
 
 class QDockWidget;
 class QToolBar;
@@ -329,6 +330,26 @@ inline QSystemTrayIcon::MessageIcon drvGetMessageIconType(void *param)
     return QSystemTrayIcon::MessageIcon(*(goInt*)param);
 }
 
+inline QMessageBox::Icon drvGetMessageBoxIcon(void *param)
+{
+    return QMessageBox::Icon(*(goInt*)param);
+}
+
+inline void drvSetMessageBoxIcon(void *param, QMessageBox::Icon value)
+{
+    *(goInt*)param = value;
+}
+
+inline QMessageBox::StandardButtons drvGetStandardButtons(void *param)
+{
+    return (QMessageBox::StandardButtons)(int)(*(goInt*)param);
+}
+
+inline void drvSetStandardButtons(void *param, QMessageBox::StandardButtons value)
+{
+    *(goInt*)param = value;
+}
+
 inline Qt::Alignment drvGetAlignment(void *param)
 {
     return (Qt::Alignment)(int)(*(goInt*)param);
@@ -405,8 +426,8 @@ inline void drvSetFloat64(void *param, double value)
 inline void drvSetHandle(void *param, void *obj)
 {
     if (obj && param) {
-         handle_head *head = (handle_head*)param;
-         head->native = obj;
+        handle_head *head = (handle_head*)param;
+        head->native = obj;
     }
 }
 
@@ -424,6 +445,11 @@ inline QWidget* drvGetWidget(void *param)
         return 0;
     }
     return (QWidget*)((handle_head*)param)->native;
+}
+
+inline void drvSetWidget(void *param, QWidget *widget)
+{
+    drvSetHandle(param, widget);
 }
 
 inline QLayout* drvGetLayout(void *param)
@@ -629,10 +655,10 @@ inline void drvNewObj(void *a0, void *obj)
 template <typename T>
 inline void drvDelObj(void *a0, T *obj)
 {
-	if (obj != 0) {
-		delete obj;
-		obj = 0;
-	}
+    if (obj != 0) {
+        delete obj;
+        obj = 0;
+    }
 
     if (a0 == 0) {
         return;
@@ -719,66 +745,66 @@ int _drv(int drvclass, int drvid, void *a0, void* a1, void* a2, void* a3, void* 
 
 inline Qt::AspectRatioMode drvGetAspectRatioMode(void *param)
 {
-	return (Qt::AspectRatioMode)(*(goInt*)param);
+    return (Qt::AspectRatioMode)(*(goInt*)param);
 }
 
 inline Qt::TransformationMode drvGetTransformationMode(void *param)
 {
-	return (Qt::TransformationMode)(*(goInt*)param);
+    return (Qt::TransformationMode)(*(goInt*)param);
 }
 
 inline QSizePolicy::Policy drvGetSizePolicyPolicy(void *param)
 {
-	if (param == 0) {
-		return QSizePolicy::Fixed;
-	}
+    if (param == 0) {
+        return QSizePolicy::Fixed;
+    }
 
-	return (QSizePolicy::Policy)(*(goInt*)param);
+    return (QSizePolicy::Policy)(*(goInt*)param);
 }
 
 inline void drvSetSizePolicyPolicy(void *param, QSizePolicy::Policy policy)
 {
-	if (param == 0) {
-		return;
-	}
+    if (param == 0) {
+        return;
+    }
 
-	(*(goInt*)param) = (int)policy;
+    (*(goInt*)param) = (int)policy;
 }
 
 inline QSizePolicy::ControlType drvGetSizePolicyControlType(void *param)
 {
-	if (param == 0) {
-		return QSizePolicy::DefaultType;
-	}
+    if (param == 0) {
+        return QSizePolicy::DefaultType;
+    }
 
-	return (QSizePolicy::ControlType)(*(goInt*)param);
+    return (QSizePolicy::ControlType)(*(goInt*)param);
 }
 
 inline void drvSetSizePolicyControlType(void *param, QSizePolicy::ControlType control)
 {
-	if (param == 0) {
-		return;
-	}
+    if (param == 0) {
+        return;
+    }
 
-	(*(goInt*)param) = (int)control;
+    (*(goInt*)param) = (int)control;
 }
 
 inline void drvSetSizePolicy(void *param, const QSizePolicy &p) // FIXME
 {
-	QSizePolicy* policy = (QSizePolicy*)drvGetNative(param);
-	if (policy == 0) {
-		drvSetHandle(param, new QSizePolicy(p));
-		return;
-	}
-	*policy = p;
+    QSizePolicy* policy = (QSizePolicy*)drvGetNative(param);
+    if (policy == 0) {
+        drvSetHandle(param, new QSizePolicy(p));
+        return;
+    }
+    *policy = p;
 }
 
 inline QSizePolicy drvGetSizePolicy(void *param) // FIXME
 {
-	QSizePolicy* policy = (QSizePolicy*)drvGetNative(param);
-	if (policy == 0) {
-		return QSizePolicy();
-	}
+    QSizePolicy* policy = (QSizePolicy*)drvGetNative(param);
+    if (policy == 0) {
+        return QSizePolicy();
+    }
 
     return QSizePolicy(*policy);
 }

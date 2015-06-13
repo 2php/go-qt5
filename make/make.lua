@@ -17,6 +17,7 @@ require "ui.tabwidget"
 require "ui.toolbox"
 
 require "ui.dialog"
+require "ui.messagebox"
 
 require "ui.baselayout"
 require "ui.boxlayout"
@@ -29,6 +30,10 @@ require "ui.button"
 require "ui.checkbox"
 require "ui.radio"
 require "ui.toolbutton"
+
+require "ui.basespinbox"
+require "ui.spinbox"
+require "ui.doublespinbox"
 
 require "ui.frame"
 require "ui.label"
@@ -108,10 +113,15 @@ function make()
 		def(radio)
 		def(toolbutton)
 
+		def(basespinbox)
+		def(spinbox)
+		def(doublespinbox)
+
 		def(frame)
 		def(label)
 		def(groupbox)
 		def(dialog)
+		def(messagebox)
 
 		def(combobox)
 		def(lineedit)

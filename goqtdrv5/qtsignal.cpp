@@ -49,6 +49,11 @@ void QtSignal::call(int i, int j)
     drv_callback(m_func,&gi,&gj,0,0);
 }
 
+void QtSignal::call(double i)
+{
+    drv_callback(m_func,&i,0,0,0);
+}
+
 void QtSignal::call(const QString& s)
 {
     string_head sh;

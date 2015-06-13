@@ -27,6 +27,7 @@ funcs = [[
 @ TextAlignment() (value Alignment)
 @ SetFlags(value ItemFlag)
 @ Flags() (value ItemFlag)
+@ SetSizeHint(size Size)
 ]]
 
 qtdrv = {

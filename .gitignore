@@ -5,6 +5,11 @@
 *.dll
 qt5/uiobjs.go
 goqtdrv5/cdrv.cpp
+goqtdrv5/Makefile
+goqtdrv5/.qmake.stash
+moc*
+lib/
+
 
 # Folders
 _obj
