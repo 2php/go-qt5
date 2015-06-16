@@ -350,6 +350,26 @@ inline void drvSetStandardButtons(void *param, QMessageBox::StandardButtons valu
     *(goInt*)param = value;
 }
 
+inline Qt::ItemFlags drvGetItemFlags(void *param)
+{
+    return (Qt::ItemFlags)(int)(*(goInt*)param);
+}
+
+inline void drvSetItemFlags(void *param, Qt::ItemFlags value)
+{
+    *(goInt*)param = value;
+}
+
+inline Qt::CheckState drvGetCheckState(void *param)
+{
+    return (Qt::CheckState)(int)(*(goInt*)param);
+}
+
+inline void drvSetCheckState(void *param, Qt::CheckState value)
+{
+    *(goInt*)param = value;
+}
+
 inline Qt::Alignment drvGetAlignment(void *param)
 {
     return (Qt::Alignment)(int)(*(goInt*)param);
