@@ -69,6 +69,7 @@ require "ui.listwidgetitem"
 require "ui.listwidget"
 
 require "ui.tablewidgetitem"
+require "ui.tablewidget"
 
 require "ui.mainwindow"
 
@@ -147,6 +148,7 @@ function make()
 		def(listwidget)
 
 		def(tablewidgetitem)
+		def(tablewidget)
 
 		def(mainwindow)
 

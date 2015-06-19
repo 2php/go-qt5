@@ -75,3 +75,13 @@ void QtSignal::call(QListWidgetItem* item,QListWidgetItem* olditem)
 {
     drv_callback(m_func,item,olditem,0,0);
 }
+
+void QtSignal::call(QTableWidgetItem* item)
+{
+    drv_callback(m_func,item,0,0,0);
+}
+
+void QtSignal::call(QTableWidgetItem* item,QTableWidgetItem* olditem)
+{
+    drv_callback(m_func,item,olditem,0,0);
+}

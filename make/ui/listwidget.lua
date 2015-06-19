@@ -37,6 +37,20 @@ Init = [[
 drvNewObj(a0,new QListWidget);
 ]],
 
+Count = "count",
+SetCurrentItem = "setCurrentItem",
+CurrentItem = "currentItem",
+SetCurrentRow = "setCurrentRow",
+CurrentRow = "currentRow",
+AddItem = "addItem",
+InsertItem = "insertItem",
+EditItem = "editItem",
+TakeItem = "takeItem",
+Item = "item",
+SetItemWidget = "setItemWidget",
+ItemWidget = "itemWidget",
+Clear = "clear",
+
 OnCurrentItemChanged = [[
 QObject::connect(self,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),drvNewSignal(self,a1,a2),SLOT(call(QListWidgetItem*,QListWidgetItem*)));
 ]],
