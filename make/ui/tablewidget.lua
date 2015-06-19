@@ -11,8 +11,8 @@ funcs = [[
 @ SetRowCount(rows int)
 @ RowCount()(rows int)
 
-SetCellWidget(row int, col int, w *Widget)
-CellWidget(row int, col int)(w *Widget)
+SetCellWidget(row int, col int, w IWidget)
+CellWidget(row int, col int)(w IWidget)
 Column(item *TableWidgetItem)(col int)
 CurrentColumn()(col int)
 SetCurrentCell(row int, col int)
