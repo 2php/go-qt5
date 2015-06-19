@@ -510,6 +510,21 @@ inline QIcon drvGetIcon(void *param)
     return *icon;
 }
 
+inline void drvSetModelIndex(void *param, QModelIndex index)
+{
+    drvSetHandle(param, &index);
+}
+
+inline QModelIndex drvGetModelIndex(void *param)
+{
+    QModelIndex *index = (QModelIndex *)drvGetNative(param);
+    if (!index) {
+        return QModelIndex();
+    }
+    return *index;
+}
+
+
 inline void drvSetIcon(void *param, const QIcon &icon)
 {
     drvSetHandle(param,theApp->insertIcon(icon));

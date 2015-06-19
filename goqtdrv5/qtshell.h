@@ -62,5 +62,32 @@ public:
     }
 };
 
+class ShellModelIndex : public QModelIndex
+{
+public:
+    ShellModelIndex() : QModelIndex()
+    {
+    }
+
+    QString stringData()
+    {
+        return QModelIndex::data().toString();
+    }
+
+    int integerData()
+    {
+        return QModelIndex::data().toInt();
+    }
+
+    double floatData()
+    {
+        return QModelIndex::data().toDouble();
+    }
+
+    ~ShellModelIndex()
+    {
+        theApp->deleteObj(this);
+    }
+};
 
 #endif // QTSHELL_H

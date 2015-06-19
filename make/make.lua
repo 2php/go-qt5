@@ -35,6 +35,7 @@ require "ui.basespinbox"
 require "ui.spinbox"
 require "ui.doublespinbox"
 
+require "ui.modelindex"
 require "ui.standarditem"
 
 require "ui.frame"
@@ -119,6 +120,7 @@ function make()
 		def(spinbox)
 		def(doublespinbox)
 
+		def(modelindex)
 		def(standarditem)
 
 		def(frame)
