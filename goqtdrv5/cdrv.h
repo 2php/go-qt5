@@ -583,7 +583,18 @@ inline QListWidgetItem* drvGetListWidgetItem(void *param)
 {
     return (QListWidgetItem*)drvGetNative(param);
 }
+
 inline void drvSetListWidgetItem(void *param, QListWidgetItem* item)
+{
+    drvSetHandle(param,item);
+}
+
+inline QTableWidgetItem* drvGetTableWidgetItem(void *param)
+{
+    return (QTableWidgetItem*)drvGetNative(param);
+}
+
+inline void drvSetTableWidgetItem(void *param, QTableWidgetItem* item)
 {
     drvSetHandle(param,item);
 }

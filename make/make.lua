@@ -68,6 +68,8 @@ require "ui.dial"
 require "ui.listwidgetitem"
 require "ui.listwidget"
 
+require "ui.tablewidgetitem"
+
 require "ui.mainwindow"
 
 require "ui.glwidget"
@@ -143,6 +145,8 @@ function make()
 
 		def(listwidgetitem)
 		def(listwidget)
+
+		def(tablewidgetitem)
 
 		def(mainwindow)
 

@@ -17,6 +17,7 @@
 
 #include "qtapp.h"
 #include <QListWidgetItem>
+#include <QTableWidgetItem>
 #include <QStandardItem>
 
 class ShellListWidgetItem : public QListWidgetItem
@@ -32,6 +33,23 @@ public:
     }
 
     ~ShellListWidgetItem()
+    {
+        theApp->deleteObj(this);
+    }
+};
+
+class ShellTableWidgetItem : public QTableWidgetItem
+{
+public:
+    ShellTableWidgetItem() : QTableWidgetItem()
+    {
+    }
+
+    ShellTableWidgetItem(const QString &text) : QTableWidgetItem(text)
+    {
+    }
+
+    ~ShellTableWidgetItem()
     {
         theApp->deleteObj(this);
     }
