@@ -17,6 +17,7 @@
 
 #include "qtapp.h"
 #include <QListWidgetItem>
+#include <QStandardItem>
 
 class ShellListWidgetItem : public QListWidgetItem
 {
@@ -24,12 +25,38 @@ public:
     ShellListWidgetItem() : QListWidgetItem()
     {
     }
+
     ShellListWidgetItem(const QString &text) : QListWidgetItem(text)
     {
 
     }
 
     ~ShellListWidgetItem()
+    {
+        theApp->deleteObj(this);
+    }
+};
+
+class ShellStandardItem : public QStandardItem
+{
+public:
+    ShellStandardItem() : QStandardItem()
+    {
+    }
+
+    ShellStandardItem(const QString & text) : QStandardItem(text)
+    {
+    }
+
+    ShellStandardItem(const QIcon & icon, const QString & text) : QStandardItem(icon, text)
+    {
+    }
+
+    ShellStandardItem(int rows, int columns = 1) : QStandardItem(rows, columns)
+    {
+    }
+
+    ~ShellStandardItem()
     {
         theApp->deleteObj(this);
     }

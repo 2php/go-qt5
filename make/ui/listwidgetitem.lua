@@ -31,7 +31,7 @@ funcs = [[
 ]]
 
 qtdrv = {
---inc = "<ListWidgetItem>",
+
 name = "ShellListWidgetItem *",
 
 Init = [[

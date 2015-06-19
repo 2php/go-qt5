@@ -1,7 +1,7 @@
 module("standarditem")
 
 name = "StandardItem"
-base = ""
+base = "object"
 
 funcs = [[
 + Init()
@@ -44,20 +44,20 @@ Text()(text string)
 ]]
 
 qtdrv = {
-inc = "<QStandardItem>",
-name = "QStandardItem *",
+
+name = "ShellStandardItem *",
 
 Init = [[
-drvNewObj(a0, new QStandardItem());
+drvNewObj(a0, new ShellStandardItem);
 ]],
 InitWithText = [[
-drvNewObj(a0, new QStandardItem(drvGetString(a1)));
+drvNewObj(a0, new ShellStandardItem(drvGetString(a1)));
 ]],
 InitWithTextAndIcon = [[
-drvNewObj(a0, new QStandardItem(drvGetIcon(a1), drvGetString(a2)));
+drvNewObj(a0, new ShellStandardItem(drvGetIcon(a1), drvGetString(a2)));
 ]],
 InitWithRowsAndCols = [[
-drvNewObj(a0, new QStandardItem(drvGetInt(a1), drvGetInt(a2)));
+drvNewObj(a0, new ShellStandardItem(drvGetInt(a1), drvGetInt(a2)));
 ]],
 
 SetBackground = "setBackground",
