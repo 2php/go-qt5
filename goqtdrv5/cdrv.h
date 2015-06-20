@@ -350,6 +350,26 @@ inline void drvSetStandardButtons(void *param, QMessageBox::StandardButtons valu
     *(goInt*)param = value;
 }
 
+inline Qt::ItemFlags drvGetItemFlags(void *param)
+{
+    return (Qt::ItemFlags)(int)(*(goInt*)param);
+}
+
+inline void drvSetItemFlags(void *param, Qt::ItemFlags value)
+{
+    *(goInt*)param = value;
+}
+
+inline Qt::CheckState drvGetCheckState(void *param)
+{
+    return (Qt::CheckState)(int)(*(goInt*)param);
+}
+
+inline void drvSetCheckState(void *param, Qt::CheckState value)
+{
+    *(goInt*)param = value;
+}
+
 inline Qt::Alignment drvGetAlignment(void *param)
 {
     return (Qt::Alignment)(int)(*(goInt*)param);
@@ -490,6 +510,21 @@ inline QIcon drvGetIcon(void *param)
     return *icon;
 }
 
+inline void drvSetModelIndex(void *param, QModelIndex index)
+{
+    drvSetHandle(param, &index);
+}
+
+inline QModelIndex drvGetModelIndex(void *param)
+{
+    QModelIndex *index = (QModelIndex *)drvGetNative(param);
+    if (!index) {
+        return QModelIndex();
+    }
+    return *index;
+}
+
+
 inline void drvSetIcon(void *param, const QIcon &icon)
 {
     drvSetHandle(param,theApp->insertIcon(icon));
@@ -548,7 +583,18 @@ inline QListWidgetItem* drvGetListWidgetItem(void *param)
 {
     return (QListWidgetItem*)drvGetNative(param);
 }
+
 inline void drvSetListWidgetItem(void *param, QListWidgetItem* item)
+{
+    drvSetHandle(param,item);
+}
+
+inline QTableWidgetItem* drvGetTableWidgetItem(void *param)
+{
+    return (QTableWidgetItem*)drvGetNative(param);
+}
+
+inline void drvSetTableWidgetItem(void *param, QTableWidgetItem* item)
 {
     drvSetHandle(param,item);
 }

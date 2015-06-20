@@ -18,6 +18,7 @@
 #include <QObject>
 #include <QAction>
 #include <QListWidgetItem>
+#include <QTableWidgetItem>
 
 class QtSignal : public QObject
 {
@@ -34,7 +35,9 @@ public slots:
     void call(const QString&);
     void call(QAction*);
     void call(QListWidgetItem*);
-    void call(QListWidgetItem*,QListWidgetItem*);
+    void call(QListWidgetItem*, QListWidgetItem*);
+    void call(QTableWidgetItem*);
+    void call(QTableWidgetItem*, QTableWidgetItem*);
 public:
     void *m_func;
 };

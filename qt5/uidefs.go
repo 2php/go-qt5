@@ -68,22 +68,25 @@ const (
 )
 
 type ItemFlag int
+type ItemFlags int
 
 const (
-	NoItemFlags ItemFlag = iota
-	ItemIsSelectable
-	ItemIsEditable
-	ItemIsDragEnabled
-	ItemIsDropEnabled
-	ItemIsUserCheckable
-	ItemIsEnabled
-	ItemIsTristate
+	NoItemFlags         ItemFlag = 0
+	ItemIsSelectable    ItemFlag = 1
+	ItemIsEditable      ItemFlag = 2
+	ItemIsDragEnabled   ItemFlag = 4
+	ItemIsDropEnabled   ItemFlag = 8
+	ItemIsUserCheckable ItemFlag = 16
+	ItemIsEnabled       ItemFlag = 32
+	ItemIsTristate      ItemFlag = 64
 )
 
+type CheckState int
+
 const (
-	Unchecked        = 0
-	PartiallyChecked = 1
-	Checked          = 2
+	Unchecked        CheckState = 0
+	PartiallyChecked CheckState = 1
+	Checked          CheckState = 2
 )
 
 const (

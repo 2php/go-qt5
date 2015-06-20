@@ -35,6 +35,9 @@ require "ui.basespinbox"
 require "ui.spinbox"
 require "ui.doublespinbox"
 
+require "ui.modelindex"
+require "ui.standarditem"
+
 require "ui.frame"
 require "ui.label"
 
@@ -64,6 +67,9 @@ require "ui.dial"
 
 require "ui.listwidgetitem"
 require "ui.listwidget"
+
+require "ui.tablewidgetitem"
+require "ui.tablewidget"
 
 require "ui.mainwindow"
 
@@ -117,6 +123,9 @@ function make()
 		def(spinbox)
 		def(doublespinbox)
 
+		def(modelindex)
+		def(standarditem)
+
 		def(frame)
 		def(label)
 		def(groupbox)
@@ -137,6 +146,9 @@ function make()
 
 		def(listwidgetitem)
 		def(listwidget)
+
+		def(tablewidgetitem)
+		def(tablewidget)
 
 		def(mainwindow)
 

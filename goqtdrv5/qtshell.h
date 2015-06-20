@@ -17,6 +17,8 @@
 
 #include "qtapp.h"
 #include <QListWidgetItem>
+#include <QTableWidgetItem>
+#include <QStandardItem>
 
 class ShellListWidgetItem : public QListWidgetItem
 {
@@ -24,6 +26,7 @@ public:
     ShellListWidgetItem() : QListWidgetItem()
     {
     }
+
     ShellListWidgetItem(const QString &text) : QListWidgetItem(text)
     {
 
@@ -35,5 +38,74 @@ public:
     }
 };
 
+class ShellTableWidgetItem : public QTableWidgetItem
+{
+public:
+    ShellTableWidgetItem() : QTableWidgetItem()
+    {
+    }
+
+    ShellTableWidgetItem(const QString &text) : QTableWidgetItem(text)
+    {
+    }
+
+    ~ShellTableWidgetItem()
+    {
+        theApp->deleteObj(this);
+    }
+};
+
+class ShellStandardItem : public QStandardItem
+{
+public:
+    ShellStandardItem() : QStandardItem()
+    {
+    }
+
+    ShellStandardItem(const QString & text) : QStandardItem(text)
+    {
+    }
+
+    ShellStandardItem(const QIcon & icon, const QString & text) : QStandardItem(icon, text)
+    {
+    }
+
+    ShellStandardItem(int rows, int columns = 1) : QStandardItem(rows, columns)
+    {
+    }
+
+    ~ShellStandardItem()
+    {
+        theApp->deleteObj(this);
+    }
+};
+
+class ShellModelIndex : public QModelIndex
+{
+public:
+    ShellModelIndex() : QModelIndex()
+    {
+    }
+
+    QString stringData()
+    {
+        return QModelIndex::data().toString();
+    }
+
+    int integerData()
+    {
+        return QModelIndex::data().toInt();
+    }
+
+    double floatData()
+    {
+        return QModelIndex::data().toDouble();
+    }
+
+    ~ShellModelIndex()
+    {
+        theApp->deleteObj(this);
+    }
+};
 
 #endif // QTSHELL_H
