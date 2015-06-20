@@ -43,6 +43,8 @@ funcs = [[
 @ SetSizePolicyHV(horizontal SizePolicyPolicy, vertical SizePolicyPolicy)
 @ SetSizePolicy(policy *SizePolicy)
 @ SizePolicy() (policy *SizePolicy)
+@ SetEnabled(b bool)
+@ IsEnabled()(b bool)
 WinID() (id int)
 Done()
 Update()
@@ -171,6 +173,8 @@ KillTimer = "killTimer",
 AddAction = "addAction",
 InsertAction = "insertAction",
 RemoveAction = "removeAction",
+SetEnabled = "setEnabled",
+IsEnabled = "isEnabled",
 
 OnShowEvent = [[
 drvNewEvent(QEvent::Show,a0,a1,a2);
