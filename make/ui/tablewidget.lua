@@ -22,6 +22,8 @@ CurrentRow()(row int)
 EditItem(item *TableWidgetItem)
 SetHorizontalHeaderItem(col int, item *TableWidgetItem)
 HorizontalHeaderItem(col int)(item *TableWidgetItem)
+SetHorizontalHeader(h HeaderView)
+HorizontalHeader()(h HeaderView)
 SetItem(row int, col int, item *TableWidgetItem)
 Item(row int, col int) (item *TableWidgetItem)
 RemoveCellWidget(row int, col int)
@@ -31,6 +33,8 @@ TakeHorizontalHeaderItem(col int)(item *TableWidgetItem)
 TakeVerticalHeaderItem(row int)(item *TableWidgetItem)
 SetVerticalHeaderItem(row int, item *TableWidgetItem)
 VerticalHeaderItem(row int)(item *TableWidgetItem)
+SetVerticalHeader(h HeaderView)
+VerticalHeader()(h HeaderView)
 InsertColumn(col int)
 RemoveColumn(col int)
 InsertRow(row int)
@@ -76,6 +80,8 @@ CurrentRow = "currentRow",
 EditItem = "editItem",
 SetHorizontalHeaderItem = "setHorizontalHeaderItem", 
 HorizontalHeaderItem = "horizontalHeaderItem",
+SetHorizontalHeader = "setHorizontalHeader",
+HorizontalHeader = "horizontalHeader",
 SetItem = "setItem",
 Item = "item",
 SetItemPrototype = "setItemPrototype", 
@@ -87,6 +93,8 @@ TakeHorizontalHeaderItem = "takeHorizontalHeaderItem",
 TakeVerticalHeaderItem = "takeVerticalHeaderItem",
 SetVerticalHeaderItem = "setVerticalHeaderItem",
 VerticalHeaderItem = "verticalHeaderItem",
+SetVerticalHeader = "setVerticalHeader",
+VerticalHeader = "verticalHeader",
 InsertColumn = "insertColumn",
 RemoveColumn = "removeColumn",
 InsertRow = "insertRow",

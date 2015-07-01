@@ -504,6 +504,19 @@ inline QMenuBar* drvGetMenuBar(void *param)
     return (QMenuBar*)drvGetNative(param);
 }
 
+inline QHeaderView* drvGetHeaderView(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QHeaderView*)drvGetNative(param);
+}
+
+inline void drvSetHeaderView(void *param, QHeaderView* header)
+{
+    drvSetHandle(param,header);
+}
+
 inline QAction* drvGetAction(void *param)
 {
     if (param == 0) {
