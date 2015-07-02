@@ -284,6 +284,15 @@ const (
 	ControlTypeToolButton                        = 0x00004000
 )
 
+type HeaderResizeMode int
+
+const (
+	InteractiveHeader      HeaderResizeMode = 0
+	StretchHeader          HeaderResizeMode = 1
+	FixedHeader            HeaderResizeMode = 2
+	ResizeHeaderToContents HeaderResizeMode = 3
+)
+
 type Point struct {
 	X, Y int
 }

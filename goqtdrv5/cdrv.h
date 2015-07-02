@@ -34,6 +34,7 @@
 #include <QSizePolicy>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QHeaderView>
 
 class QDockWidget;
 class QToolBar;
@@ -340,6 +341,16 @@ inline void drvSetMessageBoxIcon(void *param, QMessageBox::Icon value)
     *(goInt*)param = value;
 }
 
+inline QHeaderView::ResizeMode drvGetHeaderResizeMode(void *param)
+{
+    return QHeaderView::ResizeMode(*(goInt*)param);
+}
+
+inline void drvSetHeaderResizeMode(void *param, QHeaderView::ResizeMode value)
+{
+    *(goInt*)param = value;
+}
+
 inline QMessageBox::StandardButtons drvGetStandardButtons(void *param)
 {
     return (QMessageBox::StandardButtons)(int)(*(goInt*)param);
@@ -491,6 +502,19 @@ inline QMenu* drvGetMenu(void *param)
 inline QMenuBar* drvGetMenuBar(void *param)
 {
     return (QMenuBar*)drvGetNative(param);
+}
+
+inline QHeaderView* drvGetHeaderView(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QHeaderView*)drvGetNative(param);
+}
+
+inline void drvSetHeaderView(void *param, QHeaderView* header)
+{
+    drvSetHandle(param,header);
 }
 
 inline QAction* drvGetAction(void *param)
