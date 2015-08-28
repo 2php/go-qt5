@@ -10,13 +10,20 @@ funcs = [[
 @ CurrentItem() (item *ListWidgetItem)
 @ SetCurrentRow(row int)
 @ CurrentRow() (row int)
+@ IsSortingEnabled()(b bool)
+@ SetSortingEnabled(b bool)
 AddItem(item *ListWidgetItem)
+AddItems(labels []string)
 InsertItem(index int,item *ListWidgetItem)
+InsertItems(index int,items []string)
 EditItem(item *ListWidgetItem)
 TakeItem(row int) (item *ListWidgetItem)
 Item(row int) (item *ListWidgetItem)
+ItemAt(x int, y int)(item *ListWidgetItem)
 SetItemWidget(item *ListWidgetItem, widget IWidget)
 ItemWidget(item *ListWidgetItem)(widget IWidget)
+RemoveItemWidget(item *ListWidgetItem)
+Row(item *ListWidgetItem)(row int)
 Clear()
 * OnCurrentItemChanged(fn func(*ListWidgetItem,*ListWidgetItem))
 * OnCurrentRowChanged(fn func(int))
@@ -27,6 +34,18 @@ Clear()
 * OnItemEntered(fn func(*ListWidgetItem))
 * OnItemPressed(fn func(*ListWidgetItem))
 * OnItemSelectionChanged(fn func())
+]]
+
+expands = [[
+func (p *ListWidget) AddItemByLabel(label string) {
+    newItem := NewListWidgetItemWithText(label)
+    p.AddItem(newItem)
+}
+
+func (p *ListWidget) InsertItemByLabel(index int, label string) {
+    newItem := NewListWidgetItemWithText(label)
+    p.InsertItem(index, newItem)
+}
 ]]
 
 qtdrv = {
@@ -42,13 +61,20 @@ SetCurrentItem = "setCurrentItem",
 CurrentItem = "currentItem",
 SetCurrentRow = "setCurrentRow",
 CurrentRow = "currentRow",
+IsSortingEnabled = "isSortingEnabled",
+SetSortingEnabled = "setSortingEnabled",
 AddItem = "addItem",
+AddItems = "addItems",
 InsertItem = "insertItem",
+InsertItems = "insertItems",
 EditItem = "editItem",
 TakeItem = "takeItem",
 Item = "item",
+ItemAt = "itemAt",
 SetItemWidget = "setItemWidget",
 ItemWidget = "itemWidget",
+RemoveItemWidget = "removeItemWidget",
+Row = "row",
 Clear = "clear",
 
 OnCurrentItemChanged = [[
