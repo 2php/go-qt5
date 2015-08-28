@@ -26,11 +26,11 @@ Shuffle()
 * OnCurrentIndexChanged(fn func(int))
 * OnLoadFailed(fn func())
 * OnLoaded(fn func())
-* OnMediaAboutToBeInserted(fn func(int, int))
-* OnMediaAboutToBeRemoved(fn func(int, int))
-* OnMediaChanged(fn func(int, int))
-* OnMediaInserted(fn func(int, int))
-* OnMediaRemoved(fn func(int, int))
+* OnMediaAboutToBeInserted(fn func(int,int))
+* OnMediaAboutToBeRemoved(fn func(int,int))
+* OnMediaChanged(fn func(int,int))
+* OnMediaInserted(fn func(int,int))
+* OnMediaRemoved(fn func(int,int))
 ]]
 
 qtdrv = {
@@ -38,7 +38,7 @@ inc = "<QMediaPlaylist>",
 name = "QMediaPlaylist*",
 
 Init = [[
-drvNewObj(a0,new MediaPlaylist());
+drvNewObj(a0,new QMediaPlaylist());
 ]],
 
 Close = [[
@@ -64,29 +64,28 @@ Shuffle = "shuffle",
 
 OnCurrentIndexChanged = [[
 QObject::connect(self,SIGNAL(currentIndexChanged(int)),drvNewSignal(self,a1,a2),SLOT(call(int)));
-]]
+]],
 OnLoadFailed = [[
 QObject::connect(self,SIGNAL(loadFailed()),drvNewSignal(self,a1,a2),SLOT(call()));
-]]
-
+]],
 OnLoaded = [[
 QObject::connect(self,SIGNAL(loaded()),drvNewSignal(self,a1,a2),SLOT(call()));
-]]
+]],
 OnMediaAboutToBeInserted = [[
 QObject::connect(self,SIGNAL(mediaAboutToBeInserted(int, int)),drvNewSignal(self,a1,a2),SLOT(call(int, int)));
-]]
+]],
 OnMediaAboutToBeRemoved = [[
 QObject::connect(self,SIGNAL(mediaAboutToBeRemoved(int, int)),drvNewSignal(self,a1,a2),SLOT(call(int, int)));
-]]
+]],
 OnMediaChanged = [[
 QObject::connect(self,SIGNAL(mediaChanged(int, int)),drvNewSignal(self,a1,a2),SLOT(call(int, int)));
-]]
+]],
 OnMediaInserted = [[
 QObject::connect(self,SIGNAL(mediaInserted(int, int)),drvNewSignal(self,a1,a2),SLOT(call(int, int)));
-]]
+]],
 OnMediaRemoved = [[
 QObject::connect(self,SIGNAL(mediaRemoved(int, int)),drvNewSignal(self,a1,a2),SLOT(call(int, int)));
-]]
+]],
 
 
 }

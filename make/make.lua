@@ -79,6 +79,7 @@ require "ui.basescrollarea"
 require "ui.scrollarea"
 
 require "multimedia.mediaobject"
+require "multimedia.mediaplaylist"
 
 require "makelib"
 
@@ -160,6 +161,7 @@ function make()
 		def(scrollarea)
 
 		def(mediaobject)
+		def(mediaplaylist)
 
 	end_def()
 
