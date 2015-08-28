@@ -35,7 +35,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QHeaderView>
-#include <QMultimedia>
+#include <QMediaPlaylist>
 #include <iostream>
 
 class QDockWidget;
@@ -997,4 +997,40 @@ inline void drvSetMediaEncodingQuality(void *param, QMultimedia::EncodingQuality
     }
 
     (*(goInt*)param) = (int)quality;
+}
+
+inline QMediaPlaylist::Error drvGetMediaPlaylistError(void *param)
+{
+    if (param == 0) {
+        return QMediaPlaylist::NoError;
+    }
+
+    return (QMediaPlaylist::Error)(*(goInt*)param);
+}
+
+inline void drvSetMediaPlaylistError(void *param, QMediaPlaylist::Error error)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)error;
+}
+
+inline QMediaPlaylist::PlaybackMode drvGetMediaPlaylistPlaybackMode(void *param)
+{
+    if (param == 0) {
+        return QMediaPlaylist::CurrentItemOnce;
+    }
+
+    return (QMediaPlaylist::PlaybackMode)(*(goInt*)param);
+}
+
+inline void drvSetMediaPlaylistPlaybackMode(void *param, QMediaPlaylist::PlaybackMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
 }

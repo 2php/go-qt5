@@ -321,6 +321,26 @@ const (
 	MediaVeryHighQualityEncoding MediaEncodingQuality = 4
 )
 
+type MediaPlaylistError int
+
+const (
+	MediaPlaylistNoError              MediaPlaylistError = 0
+	MediaPlaylistFormatError          MediaPlaylistError = 1
+	MediaPlaylistForNotSupportedError MediaPlaylistError = 2
+	MediaPlaylistNetworkError         MediaPlaylistError = 3
+	MediaPlaylistAccessDeniedError    MediaPlaylistError = 4
+)
+
+type MediaPlaylistPlaybackMode int
+
+const (
+	MediaPlaylistPlayCurrentItemOnce   MediaPlaylistPlaybackMode = 0
+	MediaPlaylistPlayCurrentIteminLoop MediaPlaylistPlaybackMode = 1
+	MediaPlaylistPlaySequential        MediaPlaylistPlaybackMode = 2
+	MediaPlaylistPlayLoop              MediaPlaylistPlaybackMode = 3
+	MediaPlaylistPlayRandom            MediaPlaylistPlaybackMode = 4
+)
+
 type Point struct {
 	X, Y int
 }
