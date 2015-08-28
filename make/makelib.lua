@@ -404,6 +404,8 @@ func (p *%s) Attr(attr string) interface{} {
 				c_type = "drvGetNative"
 			elseif type == "IWidget" then
 				c_type = "drvGetWidget"
+			elseif type == "IObject" then
+				c_type = "drvGetObject"
 			elseif type == "ILayout" then
 				c_type = "drvGetLayout"
 			elseif type == "color.Color" then
@@ -419,6 +421,10 @@ func (p *%s) Attr(attr string) interface{} {
 			local ptr,typ = string.match(type,"(%*)%s*(%w+)")
 			if ptr ~= nil then
 				_c_type = typ
+			end
+			local ar,typ = string.match(type,"(%[%])%s*(%w+)")
+			if ar ~= nil then
+				_c_type = typ .. "Array"
 			end
 			local c_type = "drvSet"..string.upper(string.sub(_c_type,1,1))..string.sub(_c_type,2,-1)
 			go_out[#go_out+1] = var.." "..type
