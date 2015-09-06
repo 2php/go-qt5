@@ -247,9 +247,9 @@ type SizePolicyPolicyFlag int
 
 const (
 	GrowFlag   SizePolicyPolicyFlag = 1
-	ExpandFlag                      = 2
-	ShrinkFlag                      = 4
-	IgnoreFlag                      = 8
+	ExpandFlag SizePolicyPolicyFlag = 2
+	ShrinkFlag SizePolicyPolicyFlag = 4
+	IgnoreFlag SizePolicyPolicyFlag = 8
 )
 
 type SizePolicyPolicy int
@@ -268,20 +268,20 @@ type SizePolicyControlType int
 
 const (
 	ControlTypeDefaultType SizePolicyControlType = 0x00000001
-	ControlTypeButtonBox                         = 0x00000002
-	ControlTypeCheckBox                          = 0x00000004
-	ControlTypeComboBox                          = 0x00000008
-	ControlTypeFrame                             = 0x00000010
-	ControlTypeGroupBox                          = 0x00000020
-	ControlTypeLabel                             = 0x00000040
-	ControlTypeLine                              = 0x00000080
-	ControlTypeLineEdit                          = 0x00000100
-	ControlTypePushButton                        = 0x00000200
-	ControlTypeRadioButton                       = 0x00000400
-	ControlTypeSlider                            = 0x00000800
-	ControlTypeSpinBox                           = 0x00001000
-	ControlTypeTabWidget                         = 0x00002000
-	ControlTypeToolButton                        = 0x00004000
+	ControlTypeButtonBox   SizePolicyControlType = 0x00000002
+	ControlTypeCheckBox    SizePolicyControlType = 0x00000004
+	ControlTypeComboBox    SizePolicyControlType = 0x00000008
+	ControlTypeFrame       SizePolicyControlType = 0x00000010
+	ControlTypeGroupBox    SizePolicyControlType = 0x00000020
+	ControlTypeLabel       SizePolicyControlType = 0x00000040
+	ControlTypeLine        SizePolicyControlType = 0x00000080
+	ControlTypeLineEdit    SizePolicyControlType = 0x00000100
+	ControlTypePushButton  SizePolicyControlType = 0x00000200
+	ControlTypeRadioButton SizePolicyControlType = 0x00000400
+	ControlTypeSlider      SizePolicyControlType = 0x00000800
+	ControlTypeSpinBox     SizePolicyControlType = 0x00001000
+	ControlTypeTabWidget   SizePolicyControlType = 0x00002000
+	ControlTypeToolButton  SizePolicyControlType = 0x00004000
 )
 
 type HeaderResizeMode int
@@ -291,6 +291,19 @@ const (
 	StretchHeader          HeaderResizeMode = 1
 	FixedHeader            HeaderResizeMode = 2
 	ResizeHeaderToContents HeaderResizeMode = 3
+)
+
+type IODeviceOpenMode int
+
+const (
+	OpenModeNotOpen    IODeviceOpenMode = 0x0000
+	OpenModeReadOnly   IODeviceOpenMode = 0x0001
+	OpenModeWriteOnly  IODeviceOpenMode = 0x0002
+	OpenModeReadWrite                   = IODeviceOpenMode(OpenModeReadOnly | OpenModeWriteOnly)
+	OpenModeAppend     IODeviceOpenMode = 0x0004
+	OpenModeTruncate   IODeviceOpenMode = 0x0008
+	OpenModeText       IODeviceOpenMode = 0x0010
+	OpenModeUnbuffered IODeviceOpenMode = 0x0020
 )
 
 type MediaAvailabilityStatus int

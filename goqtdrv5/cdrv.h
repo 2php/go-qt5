@@ -223,6 +223,17 @@ inline QByteArray drvGetByteArray(void *param)
     return QByteArray(sh->data, sh->len);
 }
 
+inline void drvSetByteArray(void *param, const QByteArray& array)
+{
+    if (param == 0) {
+        return;
+    }
+
+    slice_head *sh = (slice_head*)param;
+    sh->len = array.size();
+    sh->data = array.data();
+}
+
 inline QStringList drvGetStringArray(void *param)
 {
     if (param == 0) {
@@ -1033,4 +1044,35 @@ inline void drvSetMediaPlaylistPlaybackMode(void *param, QMediaPlaylist::Playbac
     }
 
     (*(goInt*)param) = (int)mode;
+}
+
+inline QIODevice::OpenMode drvGetIODeviceOpenMode(void *param)
+{
+    if (param == 0) {
+        return QIODevice::NotOpen;
+    }
+
+    return (QIODevice::OpenMode)(int)(*(goInt*)param);
+}
+
+inline void drvSetIODeviceOpenMode(void *param, QIODevice::OpenMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
+}
+
+inline QIODevice* drvGetIODevice(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QIODevice*)((handle_head*)param)->native;
+}
+
+inline void drvSetIODevice(void *param, QIODevice* device)
+{
+    drvSetHandle(param, device);
 }
