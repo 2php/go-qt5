@@ -293,6 +293,54 @@ const (
 	ResizeHeaderToContents HeaderResizeMode = 3
 )
 
+type MediaAvailabilityStatus int
+
+const (
+	MediaAvailable      MediaAvailabilityStatus = 0
+	MediaServiceMissing MediaAvailabilityStatus = 1
+	MediaBusy           MediaAvailabilityStatus = 2
+	MediaResourceError  MediaAvailabilityStatus = 3
+)
+
+type MediaEncodingMode int
+
+const (
+	MediaConstantQualityEncoding MediaEncodingMode = 0
+	MediaConstantBitRateEncoding MediaEncodingMode = 1
+	MediaAverageBitRateEncoding  MediaEncodingMode = 2
+	MediaTwoPassEncoding         MediaEncodingMode = 3
+)
+
+type MediaEncodingQuality int
+
+const (
+	MediaVeryLowQualityEncoding  MediaEncodingQuality = 0
+	MediaLowQualityEncoding      MediaEncodingQuality = 1
+	MediaNormalQualityEncoding   MediaEncodingQuality = 2
+	MediaHighQualityEncoding     MediaEncodingQuality = 3
+	MediaVeryHighQualityEncoding MediaEncodingQuality = 4
+)
+
+type MediaPlaylistError int
+
+const (
+	MediaPlaylistNoError              MediaPlaylistError = 0
+	MediaPlaylistFormatError          MediaPlaylistError = 1
+	MediaPlaylistForNotSupportedError MediaPlaylistError = 2
+	MediaPlaylistNetworkError         MediaPlaylistError = 3
+	MediaPlaylistAccessDeniedError    MediaPlaylistError = 4
+)
+
+type MediaPlaylistPlaybackMode int
+
+const (
+	MediaPlaylistPlayCurrentItemOnce   MediaPlaylistPlaybackMode = 0
+	MediaPlaylistPlayCurrentIteminLoop MediaPlaylistPlaybackMode = 1
+	MediaPlaylistPlaySequential        MediaPlaylistPlaybackMode = 2
+	MediaPlaylistPlayLoop              MediaPlaylistPlaybackMode = 3
+	MediaPlaylistPlayRandom            MediaPlaylistPlaybackMode = 4
+)
+
 type Point struct {
 	X, Y int
 }

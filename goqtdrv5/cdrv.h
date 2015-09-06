@@ -35,6 +35,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QHeaderView>
+#include <QMediaPlaylist>
 #include <iostream>
 
 class QDockWidget;
@@ -514,6 +515,19 @@ inline void* drvGetNative(void *param)
     return ((handle_head*)param)->native;
 }
 
+inline QObject* drvGetObject(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QObject*)((handle_head*)param)->native;
+}
+
+inline void drvSetObject(void *param, QObject *object)
+{
+    drvSetHandle(param, object);
+}
+
 inline QWidget* drvGetWidget(void *param)
 {
     if (param == 0) {
@@ -929,4 +943,94 @@ inline void drvSetScrollBar(void *param, const QScrollBar *scrollbar)
         return;
     }
     drvSetHandle(param, (void*)scrollbar);
+}
+
+inline QMultimedia::AvailabilityStatus drvGetMediaAvailabilityStatus(void *param)
+{
+    if (param == 0) {
+        return QMultimedia::Available;
+    }
+
+    return (QMultimedia::AvailabilityStatus)(*(goInt*)param);
+}
+
+inline void drvSetMediaAvailabilityStatus(void *param, QMultimedia::AvailabilityStatus status)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)status;
+}
+
+inline QMultimedia::EncodingMode drvGetMediaEncodingMode(void *param)
+{
+    if (param == 0) {
+        return QMultimedia::ConstantQualityEncoding;
+    }
+
+    return (QMultimedia::EncodingMode)(*(goInt*)param);
+}
+
+inline void drvSetMediaEncodingMode(void *param, QMultimedia::EncodingMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
+}
+
+inline QMultimedia::EncodingQuality drvGetMediaEncodingQuality(void *param)
+{
+    if (param == 0) {
+        return QMultimedia::NormalQuality;
+    }
+
+    return (QMultimedia::EncodingQuality)(*(goInt*)param);
+}
+
+inline void drvSetMediaEncodingQuality(void *param, QMultimedia::EncodingQuality quality)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)quality;
+}
+
+inline QMediaPlaylist::Error drvGetMediaPlaylistError(void *param)
+{
+    if (param == 0) {
+        return QMediaPlaylist::NoError;
+    }
+
+    return (QMediaPlaylist::Error)(*(goInt*)param);
+}
+
+inline void drvSetMediaPlaylistError(void *param, QMediaPlaylist::Error error)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)error;
+}
+
+inline QMediaPlaylist::PlaybackMode drvGetMediaPlaylistPlaybackMode(void *param)
+{
+    if (param == 0) {
+        return QMediaPlaylist::CurrentItemOnce;
+    }
+
+    return (QMediaPlaylist::PlaybackMode)(*(goInt*)param);
+}
+
+inline void drvSetMediaPlaylistPlaybackMode(void *param, QMediaPlaylist::PlaybackMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
 }
