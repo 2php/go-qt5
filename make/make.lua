@@ -78,6 +78,8 @@ require "ui.sizepolicy"
 require "ui.basescrollarea"
 require "ui.scrollarea"
 
+require "ui.uiloader"
+
 require "multimedia.mediaobject"
 require "multimedia.mediaplaylist"
 
@@ -159,6 +161,8 @@ function make()
 		def(sizepolicy)
 		def(basescrollarea)
 		def(scrollarea)
+
+		def(uiloader)
 
 		def(mediaobject)
 		def(mediaplaylist)

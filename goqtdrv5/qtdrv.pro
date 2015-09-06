@@ -63,4 +63,4 @@ unix:!symbian {
     INSTALLS += target
 }
 
-QT += opengl multimedia
+QT += opengl multimedia uitools
