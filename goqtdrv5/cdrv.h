@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QHeaderView>
 #include <QMediaPlaylist>
+#include <QFile>
 #include <iostream>
 
 class QDockWidget;
@@ -1075,4 +1076,14 @@ inline QIODevice* drvGetIODevice(void *param)
 inline void drvSetIODevice(void *param, QIODevice* device)
 {
     drvSetHandle(param, device);
+}
+
+inline QFileDevice::Permissions drvGetFileDevicePermissions(void *param)
+{
+    return (QFileDevice::Permissions)(int)(*(goInt*)param);
+}
+
+inline void drvSetFileDevicePermissions(void *param, QFileDevice::Permissions value)
+{
+    *(goInt*)param = value;
 }

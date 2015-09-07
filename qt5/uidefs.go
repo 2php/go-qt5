@@ -306,6 +306,44 @@ const (
 	OpenModeUnbuffered IODeviceOpenMode = 0x0020
 )
 
+type FileDeviceFileError int
+
+const (
+	FileDeviceNoError          FileDeviceFileError = 0
+	FileDeviceReadError        FileDeviceFileError = 1
+	FileDeviceWriteError       FileDeviceFileError = 2
+	FileDeviceFatalError       FileDeviceFileError = 3
+	FileDeviceResourceError    FileDeviceFileError = 4
+	FileDeviceOpenError        FileDeviceFileError = 5
+	FileDeviceAbortError       FileDeviceFileError = 6
+	FileDeviceTimeOutError     FileDeviceFileError = 7
+	FileDeviceUnspecifiedError FileDeviceFileError = 8
+	FileDeviceRemoveError      FileDeviceFileError = 9
+	FileDeviceRenameError      FileDeviceFileError = 10
+	FileDevicePositionError    FileDeviceFileError = 11
+	FileDeviceResizeError      FileDeviceFileError = 12
+	FileDevicePermissionsError FileDeviceFileError = 13
+	FileDeviceCopyError        FileDeviceFileError = 14
+)
+
+type FileDevicePermission int
+type FileDevicePermissions int
+
+const (
+	FileDeviceReadOwner  FileDevicePermission = 0x4000
+	FileDeviceWriteOwner FileDevicePermission = 0x2000
+	FileDeviceExeOwner   FileDevicePermission = 0x1000
+	FileDeviceReadUser   FileDevicePermission = 0x0400
+	FileDeviceWriteUser  FileDevicePermission = 0x0200
+	FileDeviceExeUser    FileDevicePermission = 0x0100
+	FileDeviceReadGroup  FileDevicePermission = 0x0040
+	FileDeviceWriteGroup FileDevicePermission = 0x0020
+	FileDeviceExeGroup   FileDevicePermission = 0x0010
+	FileDeviceReadOther  FileDevicePermission = 0x0004
+	FileDeviceWriteOther FileDevicePermission = 0x0002
+	FileDeviceExeOther   FileDevicePermission = 0x0001
+)
+
 type MediaAvailabilityStatus int
 
 const (
