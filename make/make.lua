@@ -80,6 +80,7 @@ require "ui.scrollarea"
 
 require "ui.iodevice"
 require "ui.filedevice"
+require "ui.file"
 require "ui.uiloader"
 
 require "multimedia.mediaobject"

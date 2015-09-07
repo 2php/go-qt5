@@ -17,6 +17,7 @@ CreateWidget(className string)(widget IWidget)
 ErrorString()(error string)
 IsLanguageChangeEnabled()(b bool)
 SetLanguageChangeEnabled(b bool)
+Load(i *IODevice)(widget IWidget)
 
 ]]
 
@@ -41,5 +42,6 @@ CreateWidget = "createWidget",
 ErrorString = "errorString",
 IsLanguageChangeEnabled = "isLanguageChangeEnabled",
 SetLanguageChangeEnabled = "setLanguageChangeEnabled",
+Load = "load",
 
 }
