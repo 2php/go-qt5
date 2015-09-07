@@ -54,16 +54,17 @@ class QLineEdit;
 // 32 bit build
 typedef int32_t goInt;
 typedef uint32_t goUint;
+#define GO_STRING_POINTER_SIZE 0x08
 #else
 // 64 bit build
 typedef int64_t goInt;
 typedef uint64_t goUint;
+#define GO_STRING_POINTER_SIZE 0x10
 #endif
 typedef uint8_t goBool;
 
 
 #define drvInvalid (void*)-1
-#define GO_STRING_POINTER_SIZE 0x10
 
 void utf8_info_copy(void*, const char*, goInt);
 
@@ -264,17 +265,26 @@ inline void drvSetStringArray(void *param, const QStringList &s)
         return;
     }
 
-    // TODO: UNTESTED
+    // Get the slice head and set its size
     slice_head *sh = (slice_head*)param;
     sh->len = s.size();
+    sh->cap = s.size();
 
-    char *data = new char[s.size()];
+    // Create a new string pointer. This is the start of the array and it
+    // will be what we set the data address of the slice as
+    string_head *h = new string_head();
+    sh->data = (char*)h;;
 
     for (int i = 0; i < sh->len; i++) {
+        // Convert the string as normal
         const QByteArray& ar = s[i].toUtf8();
-        utf8_info_copy(&(data[i]), ar.constData(), ar.length());
+        utf8_info_copy(h, ar.constData(), ar.length());
+
+        if (i != (sh->len - 1)) {
+            // Increment the data pointer as normal
+            h = (string_head*)(((char*) h) + GO_STRING_POINTER_SIZE);
+        }
     }
-    sh->data = data;
 }
 
 inline void drvSetPoint(void *param, const QPoint &pt)
