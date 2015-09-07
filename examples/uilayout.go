@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/mpiannucci/go-qt5/qt5"
+	"github.com/salviati/go-qt5/qt5"
 )
 
 var exit = make(chan bool)
@@ -29,11 +29,5 @@ func loadUIFile(designFile string) *qt5.Widget {
 	file := qt5.NewFileWithFilename(designFile)
 	file.Open(qt5.OpenModeReadOnly)
 	uiLoader := qt5.NewUILoader()
-	layouts := uiLoader.AvailableLayouts()
-	fmt.Println("\nTesting Go array")
-	for index := range layouts {
-		fmt.Println(layouts[index])
-	}
-	fmt.Println("\n")
 	return uiLoader.Load(file)
 }
