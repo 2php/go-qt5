@@ -27,6 +27,5 @@ func loadUIFile(designFile string) *qt5.Widget {
 	file := qt5.NewFileWithFilename(designFile)
 	file.Open(qt5.OpenModeReadOnly)
 	uiLoader := qt5.NewUILoader()
-	uiWidget.CreateWidget("testing")
 	return uiLoader.Load(file)
 }
