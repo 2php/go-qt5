@@ -166,6 +166,8 @@ function make()
 		def(scrollarea)
 
 		def(iodevice)
+		def(filedevice)
+		def(file)
 		def(uiloader)
 
 		def(mediaobject)

@@ -1078,6 +1078,19 @@ inline void drvSetIODevice(void *param, QIODevice* device)
     drvSetHandle(param, device);
 }
 
+inline QIODevice* drvGetFile(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QFile*)((handle_head*)param)->native;
+}
+
+inline void drvSetFile(void *param, QFile* file)
+{
+    drvSetHandle(param, file);
+}
+
 inline QFileDevice::Permissions drvGetFileDevicePermissions(void *param)
 {
     return (QFileDevice::Permissions)(int)(*(goInt*)param);

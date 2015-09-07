@@ -4,7 +4,7 @@ name = "File"
 base = "FileDevice"
 
 funcs = [[
-+ InitWithFileName(s string)
++ InitWithFilename(s string)
 
 Copy(s string)(b bool)
 Exists()(b bool)
@@ -20,7 +20,7 @@ qtdrv = {
 inc = "<QFile>",
 name = "QFile *",
 
-InitWithFileName = [[
+InitWithFilename = [[
 drvNewObj(a0, new QFile(drvGetString(a1)));
 ]],
 

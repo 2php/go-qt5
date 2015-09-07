@@ -1,7 +1,7 @@
 module("filedevice")
 
 name = "FileDevice"
-base = "FileDevice"
+base = "IODevice"
 
 funcs = [[
 
@@ -9,8 +9,8 @@ FileName()(name string)
 Flush()(b bool)
 Handle()(i int)
 UnsetError()
-Permissions()(p FileDevicePermissions)
-SetPermissions(p FileDevicePermissions)(b bool)
+Permissions()(f FileDevicePermissions)
+SetPermissions(f FileDevicePermissions)(b bool)
 
 ]]
 

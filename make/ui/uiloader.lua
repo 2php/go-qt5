@@ -11,13 +11,10 @@ PluginPaths()(paths []string)
 ClearPluginPaths()
 AvailableLayouts()(layouts []string)
 AvailableWidgets()(widgets []string)
-CreateAction()(a *Action)
-CreateLayout(className string)(layout ILayout)
-CreateWidget(className string)(widget IWidget)
 ErrorString()(error string)
 IsLanguageChangeEnabled()(b bool)
 SetLanguageChangeEnabled(b bool)
-Load(i *IODevice)(widget IWidget)
+Load(i *File)(widget *Widget)
 
 ]]
 
@@ -37,8 +34,6 @@ PluginPaths = "pluginPaths",
 ClearPluginPaths = "clearPluginPaths",
 AvailableLayouts = "availableLayouts",
 AvailableWidgets = "availableWidgets",
-CreateAction = "createAction",
-CreateWidget = "createWidget",
 ErrorString = "errorString",
 IsLanguageChangeEnabled = "isLanguageChangeEnabled",
 SetLanguageChangeEnabled = "setLanguageChangeEnabled",
