@@ -22,6 +22,7 @@ CurrentRow()(row int)
 EditItem(item *TableWidgetItem)
 SetHorizontalHeaderItem(col int, item *TableWidgetItem)
 HorizontalHeaderItem(col int)(item *TableWidgetItem)
+SetHorizontalHeaderLabels(sl []string)
 SetHorizontalHeader(h HeaderView)
 HorizontalHeader()(h HeaderView)
 SetItem(row int, col int, item *TableWidgetItem)
@@ -33,6 +34,7 @@ TakeHorizontalHeaderItem(col int)(item *TableWidgetItem)
 TakeVerticalHeaderItem(row int)(item *TableWidgetItem)
 SetVerticalHeaderItem(row int, item *TableWidgetItem)
 VerticalHeaderItem(row int)(item *TableWidgetItem)
+SetVerticalHeaderLabels(sl []string)
 SetVerticalHeader(h HeaderView)
 VerticalHeader()(h HeaderView)
 InsertColumn(col int)
@@ -80,6 +82,7 @@ CurrentRow = "currentRow",
 EditItem = "editItem",
 SetHorizontalHeaderItem = "setHorizontalHeaderItem", 
 HorizontalHeaderItem = "horizontalHeaderItem",
+SetHorizontalHeaderLabels = "setHorizontalHeaderLabels",
 SetHorizontalHeader = "setHorizontalHeader",
 HorizontalHeader = "horizontalHeader",
 SetItem = "setItem",
@@ -92,6 +95,7 @@ TakeItem = "takeItem",
 TakeHorizontalHeaderItem = "takeHorizontalHeaderItem",
 TakeVerticalHeaderItem = "takeVerticalHeaderItem",
 SetVerticalHeaderItem = "setVerticalHeaderItem",
+SetVerticalHeaderLabels = "setVerticalHeaderLabels",
 VerticalHeaderItem = "verticalHeaderItem",
 SetVerticalHeader = "setVerticalHeader",
 VerticalHeader = "verticalHeader",

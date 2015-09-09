@@ -35,6 +35,9 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QHeaderView>
+#include <QMediaPlaylist>
+#include <QFile>
+#include <iostream>
 
 class QDockWidget;
 class QToolBar;
@@ -61,7 +64,7 @@ typedef uint8_t goBool;
 
 #define drvInvalid (void*)-1
 
-void utf8_info_copy(void*,const char*,goInt);
+void utf8_info_copy(void*, const char*, goInt);
 
 struct handle_head {
     void *native;
@@ -71,7 +74,6 @@ struct handle_head {
 struct string_head {
     char *data;
     goInt len;
-    goInt cap; // This is due to being mapped to utf8_info, so we need to make sure we've got enough space
 };
 
 struct slice_head {
@@ -136,7 +138,7 @@ inline QString drvGetString(void *param)
         return QString();
     }
     string_head *h = (string_head*)param;
-    return QString::fromUtf8(h->data,h->len);
+    return QString::fromUtf8(h->data, h->len);
 }
 
 inline void drvSetString(void *param, const QString &s)
@@ -146,7 +148,7 @@ inline void drvSetString(void *param, const QString &s)
     }
     const QByteArray & ar = s.toUtf8();
     // It's done this way to make sure the content isn't collected by the GO GC.
-    utf8_info_copy(param,ar.constData(),ar.length());
+    utf8_info_copy(param, ar.constData(), ar.length());
 }
 
 inline QColor drvGetColor(void *param)
@@ -171,7 +173,7 @@ inline QPoint drvGetPoint(void *param)
         return QPoint();
     }
     point_head *h = (point_head*)param;
-    return QPoint(h->x,h->y);
+    return QPoint(h->x, h->y);
 }
 
 inline QPointF drvGetPointF(void *param)
@@ -180,7 +182,7 @@ inline QPointF drvGetPointF(void *param)
         return QPointF();
     }
     pointf_head *h = (pointf_head*)param;
-    return QPointF(h->x,h->y);
+    return QPointF(h->x, h->y);
 }
 
 inline QVector<QPoint> drvGetPointArray(void *param)
@@ -191,8 +193,8 @@ inline QVector<QPoint> drvGetPointArray(void *param)
     slice_head *sh = (slice_head*)param;
     QVector<QPoint> vec(sh->len);
     point_head *h = (point_head*)sh->data;
-    for (int i=0; i < sh->len; i++) {
-        vec[i] = QPoint(h[i].x,h[i].y);
+    for (int i = 0; i < sh->len; i++) {
+        vec[i] = QPoint(h[i].x, h[i].y);
     }
     return vec;
 }
@@ -205,8 +207,8 @@ inline QVector<QRect> drvGetRectArray(void *param)
     slice_head *sh = (slice_head*)param;
     QVector<QRect> vec(sh->len);
     rect_head *h = (rect_head*)sh->data;
-    for (int i=0; i < sh->len; i++) {
-        vec[i] = QRect(h[i].x,h[i].y,h[i].width,h[i].height);
+    for (int i = 0; i < sh->len; i++) {
+        vec[i] = QRect(h[i].x, h[i].y, h[i].width, h[i].height);
     }
     return vec;
 }
@@ -217,7 +219,55 @@ inline QByteArray drvGetByteArray(void *param)
         return QByteArray();
     }
     slice_head *sh = (slice_head*)param;
-    return QByteArray(sh->data,sh->len);
+    return QByteArray(sh->data, sh->len);
+}
+
+inline void drvSetByteArray(void *param, const QByteArray& array)
+{
+    if (param == 0) {
+        return;
+    }
+
+    slice_head *sh = (slice_head*)param;
+    sh->len = array.size();
+    sh->data = array.data();
+}
+
+inline QStringList drvGetStringArray(void *param)
+{
+    if (param == 0) {
+        return QStringList();
+    }
+    slice_head *sh = (slice_head*)param;
+    QStringList stringList;
+    string_head *goStrings = (string_head*)sh->data;
+
+    for (goInt i=0; i<sh->len; i++) {
+        QString str = QString::fromUtf8(goStrings[i].data, goStrings[i].len);
+        stringList.push_back(str);
+    }
+    return stringList;
+}
+
+inline void drvSetStringArray(void *param, const QStringList &s)
+{
+    if (param == 0) {
+        return;
+    }
+
+    // Get the slice head and set its size
+    slice_head *sh = (slice_head*)param;
+    sh->len = s.size();
+    sh->cap = s.size();
+
+    string_head *stringData = new string_head[sh->len];
+    sh->data = (char*)stringData;
+
+    for (goInt i = 0; i < sh->len; i++) {
+        // Convert the string as normal
+        const QByteArray& ar = s[i].toUtf8();
+        utf8_info_copy(&(stringData[i]), ar.constData(), ar.length());
+    }
 }
 
 inline void drvSetPoint(void *param, const QPoint &pt)
@@ -236,7 +286,7 @@ inline QSize drvGetSize(void *param)
         return QSize();
     }
     size_head *h = (size_head*)param;
-    return QSize(h->width,h->hegiht);
+    return QSize(h->width, h->hegiht);
 }
 
 inline void drvSetSize(void *param, const QSize &sz)
@@ -255,7 +305,7 @@ inline QRect drvGetRect(void *param)
         return QRect();
     }
     rect_head *h = (rect_head*)param;
-    return QRect(h->x,h->y,h->width,h->height);
+    return QRect(h->x, h->y, h->width, h->height);
 }
 
 inline QRectF drvGetRectF(void *param)
@@ -264,7 +314,7 @@ inline QRectF drvGetRectF(void *param)
         return QRectF();
     }
     rectf_head *h = (rectf_head*)param;
-    return QRectF(h->x,h->y,h->width,h->height);
+    return QRectF(h->x, h->y, h->width, h->height);
 }
 
 
@@ -286,7 +336,7 @@ inline QMargins drvGetMargins(void *param)
         return QMargins();
     }
     margins_head *h = (margins_head*)param;
-    return QMargins(h->left,h->top,h->right,h->bottom);
+    return QMargins(h->left, h->top, h->right, h->bottom);
 }
 
 inline void drvSetMargins(void *param, const QMargins &mr)
@@ -308,7 +358,7 @@ inline bool drvGetBool(void *param)
 
 inline void drvSetBool(void *param, bool b)
 {
-    *(goBool*)param = b?1:0;
+    *(goBool*)param = b ? 1 : 0;
 }
 
 inline int drvGetInt(void *param)
@@ -386,7 +436,7 @@ inline Qt::Alignment drvGetAlignment(void *param)
     return (Qt::Alignment)(int)(*(goInt*)param);
 }
 
-inline void drvSetAlignment(void *param,Qt::Alignment value)
+inline void drvSetAlignment(void *param, Qt::Alignment value)
 {
     *(goInt*)param = value;
 }
@@ -397,7 +447,7 @@ inline QLineEdit::EchoMode drvGetEchoMode(void *param)
     return (QLineEdit::EchoMode)(*(goInt*)param);
 }
 
-inline void drvSetEchoMode(void *param,QLineEdit::EchoMode value)
+inline void drvSetEchoMode(void *param, QLineEdit::EchoMode value)
 {
     *(goInt*)param = value;
 }
@@ -470,6 +520,19 @@ inline void* drvGetNative(void *param)
     return ((handle_head*)param)->native;
 }
 
+inline QObject* drvGetObject(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QObject*)((handle_head*)param)->native;
+}
+
+inline void drvSetObject(void *param, QObject *object)
+{
+    drvSetHandle(param, object);
+}
+
 inline QWidget* drvGetWidget(void *param)
 {
     if (param == 0) {
@@ -514,7 +577,7 @@ inline QHeaderView* drvGetHeaderView(void *param)
 
 inline void drvSetHeaderView(void *param, QHeaderView* header)
 {
-    drvSetHandle(param,header);
+    drvSetHandle(param, header);
 }
 
 inline QAction* drvGetAction(void *param)
@@ -551,7 +614,7 @@ inline QModelIndex drvGetModelIndex(void *param)
 
 inline void drvSetIcon(void *param, const QIcon &icon)
 {
-    drvSetHandle(param,theApp->insertIcon(icon));
+    drvSetHandle(param, theApp->insertIcon(icon));
 }
 
 inline QFont drvGetFont(void *param)
@@ -565,27 +628,27 @@ inline QFont drvGetFont(void *param)
 
 inline void drvSetFont(void *param, const QFont &font)
 {
-    drvSetHandle(param,theApp->insertFont(font));
+    drvSetHandle(param, theApp->insertFont(font));
 }
 
 inline void drvSetAction(void *param, QAction *act)
 {
-    drvSetHandle(param,act);
+    drvSetHandle(param, act);
 }
 
 inline void drvSetMenu(void *param, QMenu *menu)
 {
-    drvSetHandle(param,menu);
+    drvSetHandle(param, menu);
 }
 
 inline void drvSetMenuBar(void *param, QMenuBar *bar)
 {
-    drvSetHandle(param,bar);
+    drvSetHandle(param, bar);
 }
 
 inline void drvSetStatusBar(void *param, QStatusBar *bar)
 {
-    drvSetHandle(param,bar);
+    drvSetHandle(param, bar);
 }
 
 inline QStatusBar* drvGetStatusBar(void *param)
@@ -610,7 +673,7 @@ inline QListWidgetItem* drvGetListWidgetItem(void *param)
 
 inline void drvSetListWidgetItem(void *param, QListWidgetItem* item)
 {
-    drvSetHandle(param,item);
+    drvSetHandle(param, item);
 }
 
 inline QTableWidgetItem* drvGetTableWidgetItem(void *param)
@@ -620,7 +683,7 @@ inline QTableWidgetItem* drvGetTableWidgetItem(void *param)
 
 inline void drvSetTableWidgetItem(void *param, QTableWidgetItem* item)
 {
-    drvSetHandle(param,item);
+    drvSetHandle(param, item);
 }
 
 inline QPixmap drvGetPixmap(void *param)
@@ -634,7 +697,7 @@ inline QPixmap drvGetPixmap(void *param)
 
 inline void drvSetPixmap(void *param, const QPixmap &pixmap)
 {
-    drvSetHandle(param,theApp->insertPixmap(pixmap));
+    drvSetHandle(param, theApp->insertPixmap(pixmap));
 }
 
 inline void drvSetPixmap(void *param, const QPixmap *pixmap)
@@ -642,7 +705,7 @@ inline void drvSetPixmap(void *param, const QPixmap *pixmap)
     if (pixmap == 0) {
         return;
     }
-    drvSetHandle(param,theApp->insertPixmap(*pixmap));
+    drvSetHandle(param, theApp->insertPixmap(*pixmap));
 }
 
 inline QImage drvGetImage(void *param)
@@ -656,7 +719,7 @@ inline QImage drvGetImage(void *param)
 
 inline void drvSetImage(void *param, const QImage &image)
 {
-    drvSetHandle(param,theApp->insertImage(image));
+    drvSetHandle(param, theApp->insertImage(image));
 }
 
 inline void drvSetImage(void *param, const QImage *image)
@@ -664,7 +727,7 @@ inline void drvSetImage(void *param, const QImage *image)
     if (image == 0) {
         return;
     }
-    drvSetHandle(param,theApp->insertImage(*image));
+    drvSetHandle(param, theApp->insertImage(*image));
 }
 
 inline QPen drvGetPen(void *param)
@@ -678,7 +741,7 @@ inline QPen drvGetPen(void *param)
 
 inline void drvSetPen(void *param, const QPen &pen)
 {
-    drvSetHandle(param,theApp->insertPen(pen));
+    drvSetHandle(param, theApp->insertPen(pen));
 }
 
 inline QBrush drvGetBrush(void *param)
@@ -692,33 +755,33 @@ inline QBrush drvGetBrush(void *param)
 
 inline void drvSetBrush(void *param, const QBrush &brush)
 {
-    drvSetHandle(param,theApp->insertBrush(brush));
+    drvSetHandle(param, theApp->insertBrush(brush));
 }
 
 inline void drvNewObj(void *a0, QObject *obj, bool reg = true)
 {
-    handle_head *head =(handle_head*)a0;
+    handle_head *head = (handle_head*)a0;
     head->native = obj;
     if (reg) {
-        QObject::connect(obj,SIGNAL(destroyed(QObject*)),theApp,SLOT(deleteObject(QObject*)));
+        QObject::connect(obj, SIGNAL(destroyed(QObject*)), theApp, SLOT(deleteObject(QObject*)));
     }
 }
 
 inline void drvNewObj(void *a0, QWidget *obj, bool reg = true, bool delete_close = true)
 {
-    handle_head *head =(handle_head*)a0;
+    handle_head *head = (handle_head*)a0;
     head->native = obj;
     if (delete_close) {
         obj->setAttribute(Qt::WA_DeleteOnClose);
     }
     if (reg) {
-        QObject::connect(obj,SIGNAL(destroyed(QObject*)),((QtApp*)qApp),SLOT(deleteObject(QObject*)));
+        QObject::connect(obj, SIGNAL(destroyed(QObject*)), ((QtApp*)qApp), SLOT(deleteObject(QObject*)));
     }
 }
 
 inline void drvNewObj(void *a0, void *obj)
 {
-    handle_head *head =(handle_head*)a0;
+    handle_head *head = (handle_head*)a0;
     head->native = obj;
 }
 
@@ -734,7 +797,7 @@ inline void drvDelObj(void *a0, T *obj)
         return;
     }
 
-    handle_head *head =(handle_head*)a0;
+    handle_head *head = (handle_head*)a0;
     if (head->native == 0 || head->native == drvInvalid) {
         return;
     }
@@ -744,42 +807,42 @@ inline void drvDelObj(void *a0, T *obj)
 inline void drvDelFont(void *a0, QFont *font)
 {
     theApp->removeFont(font);
-    drvDelObj(a0,font);
+    drvDelObj(a0, font);
 }
 
 inline void drvDelIcon(void *a0, QIcon *icon)
 {
     theApp->removeIcon(icon);
-    drvDelObj(a0,icon);
+    drvDelObj(a0, icon);
 }
 
 inline void drvDelPixmap(void *a0, QPixmap *pixmap)
 {
     theApp->removePixmap(pixmap);
-    drvDelObj(a0,pixmap);
+    drvDelObj(a0, pixmap);
 }
 
 inline void drvDelImage(void *a0, QImage *image)
 {
     theApp->removeImage(image);
-    drvDelObj(a0,image);
+    drvDelObj(a0, image);
 }
 
 inline void drvDelPen(void *a0, QPen *pen)
 {
     theApp->removePen(pen);
-    drvDelObj(a0,pen);
+    drvDelObj(a0, pen);
 }
 
 inline void drvDelBrush(void *a0, QBrush *brush)
 {
     theApp->removeBrush(brush);
-    drvDelObj(a0,brush);
+    drvDelObj(a0, brush);
 }
 
 inline QtSignal* drvNewSignal(QObject *parent, void *fn, void *param = 0)
 {
-    QtSignal *s = new QtSignal(0,fn);
+    QtSignal *s = new QtSignal(0, fn);
     s->moveToThread(parent->thread());
     s->setParent(parent);
     return s;
@@ -797,14 +860,14 @@ inline void drvNewEvent(int type, void *a0, void *a1, void *a2 = 0)
         ev->moveToThread(obj->thread());
         ev->setParent(obj);
         obj->installEventFilter(ev);
-        ((QtApp*)qApp)->eventMap.insert(obj,ev);
+        ((QtApp*)qApp)->eventMap.insert(obj, ev);
     }
-    ev->setEvent(type,a1);
+    ev->setEvent(type, a1);
     app->eventLock.unlock();
 }
 
 
-int drv_callback(void* fn, void *a1,void* a2,void* a3,void* a4);
+int drv_callback(void* fn, void *a1, void* a2, void* a3, void* a4);
 int drv_result(void* ch, int r);
 int drv_appmain();
 
@@ -884,5 +947,149 @@ inline void drvSetScrollBar(void *param, const QScrollBar *scrollbar)
     if (scrollbar == 0) {
         return;
     }
-    drvSetHandle(param,(void*)scrollbar);
+    drvSetHandle(param, (void*)scrollbar);
+}
+
+inline QMultimedia::AvailabilityStatus drvGetMediaAvailabilityStatus(void *param)
+{
+    if (param == 0) {
+        return QMultimedia::Available;
+    }
+
+    return (QMultimedia::AvailabilityStatus)(*(goInt*)param);
+}
+
+inline void drvSetMediaAvailabilityStatus(void *param, QMultimedia::AvailabilityStatus status)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)status;
+}
+
+inline QMultimedia::EncodingMode drvGetMediaEncodingMode(void *param)
+{
+    if (param == 0) {
+        return QMultimedia::ConstantQualityEncoding;
+    }
+
+    return (QMultimedia::EncodingMode)(*(goInt*)param);
+}
+
+inline void drvSetMediaEncodingMode(void *param, QMultimedia::EncodingMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
+}
+
+inline QMultimedia::EncodingQuality drvGetMediaEncodingQuality(void *param)
+{
+    if (param == 0) {
+        return QMultimedia::NormalQuality;
+    }
+
+    return (QMultimedia::EncodingQuality)(*(goInt*)param);
+}
+
+inline void drvSetMediaEncodingQuality(void *param, QMultimedia::EncodingQuality quality)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)quality;
+}
+
+inline QMediaPlaylist::Error drvGetMediaPlaylistError(void *param)
+{
+    if (param == 0) {
+        return QMediaPlaylist::NoError;
+    }
+
+    return (QMediaPlaylist::Error)(*(goInt*)param);
+}
+
+inline void drvSetMediaPlaylistError(void *param, QMediaPlaylist::Error error)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)error;
+}
+
+inline QMediaPlaylist::PlaybackMode drvGetMediaPlaylistPlaybackMode(void *param)
+{
+    if (param == 0) {
+        return QMediaPlaylist::CurrentItemOnce;
+    }
+
+    return (QMediaPlaylist::PlaybackMode)(*(goInt*)param);
+}
+
+inline void drvSetMediaPlaylistPlaybackMode(void *param, QMediaPlaylist::PlaybackMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
+}
+
+inline QIODevice::OpenMode drvGetIODeviceOpenMode(void *param)
+{
+    if (param == 0) {
+        return QIODevice::NotOpen;
+    }
+
+    return (QIODevice::OpenMode)(int)(*(goInt*)param);
+}
+
+inline void drvSetIODeviceOpenMode(void *param, QIODevice::OpenMode mode)
+{
+    if (param == 0) {
+        return;
+    }
+
+    (*(goInt*)param) = (int)mode;
+}
+
+inline QIODevice* drvGetIODevice(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QIODevice*)((handle_head*)param)->native;
+}
+
+inline void drvSetIODevice(void *param, QIODevice* device)
+{
+    drvSetHandle(param, device);
+}
+
+inline QIODevice* drvGetFile(void *param)
+{
+    if (param == 0) {
+        return 0;
+    }
+    return (QFile*)((handle_head*)param)->native;
+}
+
+inline void drvSetFile(void *param, QFile* file)
+{
+    drvSetHandle(param, file);
+}
+
+inline QFileDevice::Permissions drvGetFileDevicePermissions(void *param)
+{
+    return (QFileDevice::Permissions)(int)(*(goInt*)param);
+}
+
+inline void drvSetFileDevicePermissions(void *param, QFileDevice::Permissions value)
+{
+    *(goInt*)param = value;
 }

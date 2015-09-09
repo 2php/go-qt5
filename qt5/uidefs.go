@@ -247,9 +247,9 @@ type SizePolicyPolicyFlag int
 
 const (
 	GrowFlag   SizePolicyPolicyFlag = 1
-	ExpandFlag                      = 2
-	ShrinkFlag                      = 4
-	IgnoreFlag                      = 8
+	ExpandFlag SizePolicyPolicyFlag = 2
+	ShrinkFlag SizePolicyPolicyFlag = 4
+	IgnoreFlag SizePolicyPolicyFlag = 8
 )
 
 type SizePolicyPolicy int
@@ -268,20 +268,20 @@ type SizePolicyControlType int
 
 const (
 	ControlTypeDefaultType SizePolicyControlType = 0x00000001
-	ControlTypeButtonBox                         = 0x00000002
-	ControlTypeCheckBox                          = 0x00000004
-	ControlTypeComboBox                          = 0x00000008
-	ControlTypeFrame                             = 0x00000010
-	ControlTypeGroupBox                          = 0x00000020
-	ControlTypeLabel                             = 0x00000040
-	ControlTypeLine                              = 0x00000080
-	ControlTypeLineEdit                          = 0x00000100
-	ControlTypePushButton                        = 0x00000200
-	ControlTypeRadioButton                       = 0x00000400
-	ControlTypeSlider                            = 0x00000800
-	ControlTypeSpinBox                           = 0x00001000
-	ControlTypeTabWidget                         = 0x00002000
-	ControlTypeToolButton                        = 0x00004000
+	ControlTypeButtonBox   SizePolicyControlType = 0x00000002
+	ControlTypeCheckBox    SizePolicyControlType = 0x00000004
+	ControlTypeComboBox    SizePolicyControlType = 0x00000008
+	ControlTypeFrame       SizePolicyControlType = 0x00000010
+	ControlTypeGroupBox    SizePolicyControlType = 0x00000020
+	ControlTypeLabel       SizePolicyControlType = 0x00000040
+	ControlTypeLine        SizePolicyControlType = 0x00000080
+	ControlTypeLineEdit    SizePolicyControlType = 0x00000100
+	ControlTypePushButton  SizePolicyControlType = 0x00000200
+	ControlTypeRadioButton SizePolicyControlType = 0x00000400
+	ControlTypeSlider      SizePolicyControlType = 0x00000800
+	ControlTypeSpinBox     SizePolicyControlType = 0x00001000
+	ControlTypeTabWidget   SizePolicyControlType = 0x00002000
+	ControlTypeToolButton  SizePolicyControlType = 0x00004000
 )
 
 type HeaderResizeMode int
@@ -291,6 +291,105 @@ const (
 	StretchHeader          HeaderResizeMode = 1
 	FixedHeader            HeaderResizeMode = 2
 	ResizeHeaderToContents HeaderResizeMode = 3
+)
+
+type IODeviceOpenMode int
+
+const (
+	OpenModeNotOpen    IODeviceOpenMode = 0x0000
+	OpenModeReadOnly   IODeviceOpenMode = 0x0001
+	OpenModeWriteOnly  IODeviceOpenMode = 0x0002
+	OpenModeReadWrite                   = IODeviceOpenMode(OpenModeReadOnly | OpenModeWriteOnly)
+	OpenModeAppend     IODeviceOpenMode = 0x0004
+	OpenModeTruncate   IODeviceOpenMode = 0x0008
+	OpenModeText       IODeviceOpenMode = 0x0010
+	OpenModeUnbuffered IODeviceOpenMode = 0x0020
+)
+
+type FileDeviceFileError int
+
+const (
+	FileDeviceNoError          FileDeviceFileError = 0
+	FileDeviceReadError        FileDeviceFileError = 1
+	FileDeviceWriteError       FileDeviceFileError = 2
+	FileDeviceFatalError       FileDeviceFileError = 3
+	FileDeviceResourceError    FileDeviceFileError = 4
+	FileDeviceOpenError        FileDeviceFileError = 5
+	FileDeviceAbortError       FileDeviceFileError = 6
+	FileDeviceTimeOutError     FileDeviceFileError = 7
+	FileDeviceUnspecifiedError FileDeviceFileError = 8
+	FileDeviceRemoveError      FileDeviceFileError = 9
+	FileDeviceRenameError      FileDeviceFileError = 10
+	FileDevicePositionError    FileDeviceFileError = 11
+	FileDeviceResizeError      FileDeviceFileError = 12
+	FileDevicePermissionsError FileDeviceFileError = 13
+	FileDeviceCopyError        FileDeviceFileError = 14
+)
+
+type FileDevicePermission int
+type FileDevicePermissions int
+
+const (
+	FileDeviceReadOwner  FileDevicePermission = 0x4000
+	FileDeviceWriteOwner FileDevicePermission = 0x2000
+	FileDeviceExeOwner   FileDevicePermission = 0x1000
+	FileDeviceReadUser   FileDevicePermission = 0x0400
+	FileDeviceWriteUser  FileDevicePermission = 0x0200
+	FileDeviceExeUser    FileDevicePermission = 0x0100
+	FileDeviceReadGroup  FileDevicePermission = 0x0040
+	FileDeviceWriteGroup FileDevicePermission = 0x0020
+	FileDeviceExeGroup   FileDevicePermission = 0x0010
+	FileDeviceReadOther  FileDevicePermission = 0x0004
+	FileDeviceWriteOther FileDevicePermission = 0x0002
+	FileDeviceExeOther   FileDevicePermission = 0x0001
+)
+
+type MediaAvailabilityStatus int
+
+const (
+	MediaAvailable      MediaAvailabilityStatus = 0
+	MediaServiceMissing MediaAvailabilityStatus = 1
+	MediaBusy           MediaAvailabilityStatus = 2
+	MediaResourceError  MediaAvailabilityStatus = 3
+)
+
+type MediaEncodingMode int
+
+const (
+	MediaConstantQualityEncoding MediaEncodingMode = 0
+	MediaConstantBitRateEncoding MediaEncodingMode = 1
+	MediaAverageBitRateEncoding  MediaEncodingMode = 2
+	MediaTwoPassEncoding         MediaEncodingMode = 3
+)
+
+type MediaEncodingQuality int
+
+const (
+	MediaVeryLowQualityEncoding  MediaEncodingQuality = 0
+	MediaLowQualityEncoding      MediaEncodingQuality = 1
+	MediaNormalQualityEncoding   MediaEncodingQuality = 2
+	MediaHighQualityEncoding     MediaEncodingQuality = 3
+	MediaVeryHighQualityEncoding MediaEncodingQuality = 4
+)
+
+type MediaPlaylistError int
+
+const (
+	MediaPlaylistNoError              MediaPlaylistError = 0
+	MediaPlaylistFormatError          MediaPlaylistError = 1
+	MediaPlaylistForNotSupportedError MediaPlaylistError = 2
+	MediaPlaylistNetworkError         MediaPlaylistError = 3
+	MediaPlaylistAccessDeniedError    MediaPlaylistError = 4
+)
+
+type MediaPlaylistPlaybackMode int
+
+const (
+	MediaPlaylistPlayCurrentItemOnce   MediaPlaylistPlaybackMode = 0
+	MediaPlaylistPlayCurrentIteminLoop MediaPlaylistPlaybackMode = 1
+	MediaPlaylistPlaySequential        MediaPlaylistPlaybackMode = 2
+	MediaPlaylistPlayLoop              MediaPlaylistPlaybackMode = 3
+	MediaPlaylistPlayRandom            MediaPlaylistPlaybackMode = 4
 )
 
 type Point struct {
