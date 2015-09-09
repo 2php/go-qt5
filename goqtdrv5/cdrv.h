@@ -54,12 +54,10 @@ class QLineEdit;
 // 32 bit build
 typedef int32_t goInt;
 typedef uint32_t goUint;
-#define GO_STRING_POINTER_SIZE 0x08
 #else
 // 64 bit build
 typedef int64_t goInt;
 typedef uint64_t goUint;
-#define GO_STRING_POINTER_SIZE 0x10
 #endif
 typedef uint8_t goBool;
 
@@ -76,7 +74,6 @@ struct handle_head {
 struct string_head {
     char *data;
     goInt len;
-    goInt cap; // This is due to being mapped to utf8_info, so we need to make sure we've got enough space
 };
 
 struct slice_head {
@@ -243,18 +240,11 @@ inline QStringList drvGetStringArray(void *param)
     }
     slice_head *sh = (slice_head*)param;
     QStringList stringList;
+    string_head *goStrings = (string_head*)sh->data;
 
-    // This is a pointer to the first string in the slice
-    string_head *h = (string_head*)sh->data;
-
-    while (stringList.size() < sh->len)  {
-        QString str = QString::fromUtf8(h->data, h->len);
+    for (goInt i=0; i<sh->len; i++) {
+        QString str = QString::fromUtf8(goStrings[i].data, goStrings[i].len);
         stringList.push_back(str);
-
-        if (stringList.size() != sh->len) {
-            // Some hackery.. basically there is a diff of 16 between each string address.
-            h = (string_head*)(((char*) h) + GO_STRING_POINTER_SIZE);
-        }
     }
     return stringList;
 }
@@ -270,20 +260,13 @@ inline void drvSetStringArray(void *param, const QStringList &s)
     sh->len = s.size();
     sh->cap = s.size();
 
-    // Create a new string pointer. This is the start of the array and it
-    // will be what we set the data address of the slice as
-    string_head *h = new string_head();
-    sh->data = (char*)h;;
+    string_head *stringData = new string_head[sh->len];
+    sh->data = (char*)stringData;
 
-    for (int i = 0; i < sh->len; i++) {
+    for (goInt i = 0; i < sh->len; i++) {
         // Convert the string as normal
         const QByteArray& ar = s[i].toUtf8();
-        utf8_info_copy(h, ar.constData(), ar.length());
-
-        if (i != (sh->len - 1)) {
-            // Increment the data pointer as normal
-            h = (string_head*)(((char*) h) + GO_STRING_POINTER_SIZE);
-        }
+        utf8_info_copy(&(stringData[i]), ar.constData(), ar.length());
     }
 }
 

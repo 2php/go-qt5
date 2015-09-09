@@ -17,6 +17,8 @@ func main() {
 
 func ui_main() {
 	w := loadUIFile("layouts/testwidget.ui")
+	name := w.Name()
+	fmt.Println(name)
 
 	w.SetWindowTitle(qt5.Version())
 	w.SetSizev(300, 200)

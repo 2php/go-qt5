@@ -66,17 +66,18 @@ type slice_info struct {
 	Cap  int
 }
 
-type utf8_info struct {
-	data []byte
-}
+type utf8_info string
 
 func (d utf8_info) String() string {
-	return string(d.data)
+	return string(d)
 }
 
 //export utf8_info_copy
 func utf8_info_copy(p unsafe.Pointer, data unsafe.Pointer, size C.int) {
-	((*utf8_info)(p)).data = C.GoBytes(data, size)
+	s := C.GoStringN((*C.char)(data), size)
+	src := (*reflect.StringHeader)(unsafe.Pointer(&s))
+	dst := (*reflect.StringHeader)(p)
+	*dst = *src
 }
 
 func init() {

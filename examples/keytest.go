@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/salviati/go-qt5/qt5"
+	"github.com/mpiannucci/go-qt5/qt5"
 )
 
 func printInfo() {
