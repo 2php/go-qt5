@@ -34,7 +34,7 @@ type UiProperty struct {
 	StringData     string       `xml:"string"`
 	DoubleData     float64      `xml:"double"`
 	IntData        int          `xml:"number"`
-	BoolaData      bool         `xml:"bool"`
+	BoolData       bool         `xml:"bool"`
 	RectData       UiRect       `xml:"rect"`
 	SizeData       UiSize       `xml:"size"`
 	SizePolicyData UiSizePolicy `xml:"sizepolicy"`
