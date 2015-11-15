@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/xml"
+	"io/ioutil"
+	"os"
 )
 
 type UiProperty struct {
@@ -46,11 +48,32 @@ type UiConnections struct {
 	// TODO: Actual things that are connections
 }
 
-type UIFile struct {
+type UiFile struct {
 	XMLName     xml.Name        `xml:"ui"`
-	Version     int             `xml:"version,attr"`
+	Version     string          `xml:"version,attr"`
 	Class       string          `xml:"class"`
 	Widget      UiWidget        `xml:"widget"`
 	Resources   []UiResources   `xml:"resources"`
 	Connections []UiConnections `xml:"connections"`
+}
+
+func extractUiFileData(filename string) (*UiFile, error) {
+	xmlFile, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer xmlFile.Close()
+
+	XMLdata, _ := ioutil.ReadAll(xmlFile)
+
+	var uiData *UiFile
+	xml.Unmarshal(XMLdata, &uiData)
+	return uiData, nil
+}
+
+func writeUiFileData(filename string, uiData *UiFile) error {
+
+	// TODO: Not important
+
+	return nil
 }
