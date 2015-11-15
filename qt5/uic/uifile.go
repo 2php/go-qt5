@@ -6,12 +6,38 @@ import (
 	"os"
 )
 
+type UiRect struct {
+	XMLName xml.Name `xml:"rect"`
+	X       int      `xml:"x"`
+	Y       int      `xml:"y"`
+	Width   int      `xml:"width"`
+	Height  int      `xml:"height"`
+}
+
+type UiSize struct {
+	XMLName xml.Name `xml:"size"`
+	Width   int      `xml:"width"`
+	Height  int      `xml:"height"`
+}
+
+type UiSizePolicy struct {
+	XMLName            xml.Name `xml:"sizepolicy"`
+	HorizontalSizeType string   `xml:"hsizetype,attr"`
+	VerticalSizeType   string   `xml:"vsizetype,attr"`
+	HorizontalStretch  int      `xml:"horstretch"`
+	VerticalStretch    int      `xml:"verstretch"`
+}
+
 type UiProperty struct {
-	XMLName    xml.Name `xml:"property"`
-	Name       string   `xml:"name,attr"`
-	StringData string   `xml:"string"`
-	DoubleData float64  `xml:"double"`
-	IntData    int      `xml:"number"`
+	XMLName        xml.Name     `xml:"property"`
+	Name           string       `xml:"name,attr"`
+	StringData     string       `xml:"string"`
+	DoubleData     float64      `xml:"double"`
+	IntData        int          `xml:"number"`
+	BoolaData      bool         `xml:"bool"`
+	RectData       UiRect       `xml:"rect"`
+	SizeData       UiSize       `xml:"size"`
+	SizePolicyData UiSizePolicy `xml:"sizepolicy"`
 }
 
 type UiWidget struct {
