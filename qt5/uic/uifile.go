@@ -45,6 +45,7 @@ type UiWidget struct {
 	Name       string       `xml:"name,attr"`
 	Class      string       `xml:"class,attr"`
 	Layout     UiLayout     `xml:"layout"`
+	Widgets    []UiWidget   `xml:"widget"`
 	Properties []UiProperty `xml:"property"`
 }
 
