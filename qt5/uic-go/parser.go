@@ -34,9 +34,15 @@ import "github.com/mpiannucci/go-qt5/qt5"
 
 	// Loop through and find all of the children layouts and widgets
 	p.readWidgetNames(p.DesignFile.Widget)
-	p.widgetChildren += "}\n"
+	p.widgetChildren += "}\n\n"
 
-	// TODO: Create the ui setup function
+	// Create the ui setup function
+	p.widgetChildren += "func (w *" + p.DesignFile.Class + ") SetupUI(parent "
+	p.widgetChildren += p.getGoClassName(p.DesignFile.Widget.Class) + ") {\n"
+
+	// TODO: Loop through the items in the file and get their props and such
+
+	p.widgetChildren += "}\n"
 
 	return header + p.widgetChildren, nil
 }
@@ -79,7 +85,16 @@ func (p *Parser) getGoClassName(qtClassName string) string {
 	if len(qtClassName) < 1 {
 		return ""
 	}
-	return "*qt5." + upperFirst(qtClassName[1:len(qtClassName)])
+
+	// Special case handling cuz a some of the class names are not the same
+	switch qtClassName {
+	case "QPushButton":
+		qtClassName = "Button"
+	default:
+		qtClassName = qtClassName[1:len(qtClassName)]
+	}
+
+	return "*qt5." + upperFirst(qtClassName)
 }
 
 func NewParser() *Parser {
