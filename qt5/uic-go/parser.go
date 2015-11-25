@@ -41,7 +41,7 @@ import "github.com/mpiannucci/go-qt5/qt5"
 	p.widgetChildren += p.getGoClassName(p.DesignFile.Widget.Class) + ") {\n"
 
 	// TODO: Loop through the items in the file and get their props and such
-
+	p.readBaseWidgetSetup(p.DesignFile.Widget)
 	p.widgetChildren += "}\n"
 
 	return header + p.widgetChildren, nil
@@ -81,6 +81,60 @@ func (p *Parser) readLayoutNames(layout UiLayout) {
 	}
 }
 
+func (p *Parser) readBaseWidgetSetup(widget UiWidget) {
+	for _, property := range widget.Properties {
+		p.widgetChildren += "parent." + p.getGoFunctionForProperty(property) + "\n"
+	}
+
+	if len(widget.Layout.Name) > 0 {
+		p.readLayoutProperties(widget.Layout)
+		p.widgetChildren += "parent.SetLayout(w." + upperFirst(widget.Layout.Name) + ")\n"
+	}
+
+	if widget.Widgets != nil {
+		for _, item := range widget.Widgets {
+			p.readWidgetProperties(item)
+		}
+	}
+}
+
+func (p *Parser) readWidgetProperties(widget UiWidget) {
+	if len(widget.Name) == 0 {
+		return
+	}
+
+	for _, property := range widget.Properties {
+		p.widgetChildren += "w." + upperFirst(widget.Name) + "." + p.getGoFunctionForProperty(property) + "\n"
+	}
+
+	if len(widget.Layout.Name) > 0 {
+		p.readLayoutProperties(widget.Layout)
+		p.widgetChildren += "w." + upperFirst(widget.Name) + ".SetLayout(w." + upperFirst(widget.Layout.Name) + ")\n"
+	} else if widget.Widgets != nil {
+		for _, item := range widget.Widgets {
+			p.readWidgetProperties(item)
+		}
+	}
+}
+
+func (p *Parser) readLayoutProperties(layout UiLayout) {
+	if len(layout.Name) == 0 {
+		return
+	}
+
+	for _, property := range layout.Properties {
+		p.widgetChildren += "w." + upperFirst(layout.Name) + "." + p.getGoFunctionForProperty(property) + "\n"
+	}
+
+	if layout.Items != nil {
+		for _, item := range layout.Items {
+			p.readWidgetProperties(item.Widget)
+			p.widgetChildren += "w." + upperFirst(layout.Name) + ".AddWidget(w." + upperFirst(item.Widget.Name) + ")\n"
+			p.readLayoutProperties(item.Layout)
+		}
+	}
+}
+
 func (p *Parser) getGoClassName(qtClassName string) string {
 	if len(qtClassName) < 1 {
 		return ""
@@ -95,6 +149,12 @@ func (p *Parser) getGoClassName(qtClassName string) string {
 	}
 
 	return "*qt5." + upperFirst(qtClassName)
+}
+
+func (p *Parser) getGoFunctionForProperty(property UiProperty) string {
+	// TODO: Parse input and return the correct function stub to set up the property
+
+	return "tododoodo"
 }
 
 func NewParser() *Parser {

@@ -93,7 +93,7 @@ public:
 };
 
 namespace Ui {
-    class Form: public Ui_Form {};
+class Form: public Ui_Form {};
 } // namespace Ui
 
 QT_END_NAMESPACE

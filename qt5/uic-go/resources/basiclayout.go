@@ -16,4 +16,24 @@ IntSpinBox *qt5.SpinBox
 }
 
 func (w *Form) SetupUI(parent *qt5.Widget) {
+parent.tododoodo
+parent.tododoodo
+parent.tododoodo
+parent.tododoodo
+w.VerticalLayout.tododoodo
+w.VerticalLayout.tododoodo
+w.VerticalLayout.tododoodo
+w.VerticalLayout.tododoodo
+w.TitleLabel.tododoodo
+w.VerticalLayout.AddWidget(w.TitleLabel)
+w.ButtonExample.tododoodo
+w.VerticalLayout.AddWidget(w.ButtonExample)
+w.CheckBoxButton.tododoodo
+w.CheckBoxButton.tododoodo
+w.VerticalLayout.AddWidget(w.CheckBoxButton)
+w.NumberEdit.tododoodo
+w.VerticalLayout.AddWidget(w.NumberEdit)
+w.IntSpinBox.tododoodo
+w.VerticalLayout.AddWidget(w.IntSpinBox)
+parent.SetLayout(w.VerticalLayout)
 }
