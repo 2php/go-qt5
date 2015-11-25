@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -11,8 +12,10 @@ func TestBasicUiFileParse(t *testing.T) {
 	parser := NewParserFromUiFile(filename)
 
 	// Read the data and hope for no errors!
-	err := parser.CompileUiGoObject()
+	goFile, err := parser.CompileUiGoObject()
 	if err != nil {
 		t.Fail()
 	}
+
+	fmt.Println(goFile)
 }

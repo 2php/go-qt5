@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 )
 
 type Parser struct {
@@ -10,28 +9,26 @@ type Parser struct {
 	widgetChildren string
 }
 
-func (p *Parser) readUiFile(filename string) {
+func (p *Parser) ReadUiFile(filename string) {
 	uiFile, _ := extractUiFileData(filename)
 	p.DesignFile = uiFile
 }
 
-func (p *Parser) CompileUiGoObject() error {
+func (p *Parser) CompileUiGoObject() (string, error) {
 	if p.DesignFile == nil {
-		return errors.New("You must read in a .ui file first!")
+		return "", errors.New("You must read in a .ui file first!")
 	}
 
-	// TODO: Parse the UI file and write it
 	// Define constants for writing the file
-	const header = `/*******************************************************
-    * Form generated through the github.com/salviati/go-qt5/qt5/uic compiler for qt ui files to golang. 
-    * Uses the go-qt5 package as its qt5 bindings. 
-    * Changes to this file will be overwritten if the compiler is ran again.
-    *******************************************************/
-    package ui
+	const header = `// Form generated through the github.com/salviati/go-qt5/qt5/uic compiler for qt ui files to golang.
+// Uses the go-qt5 package as its qt5 bindings. 
+// Changes to this file will be overwritten if the compiler is ran again.
 
-    import "github.com/mpiannucci/go-qt5/qt5"
+package ui
 
-    `
+import "github.com/mpiannucci/go-qt5/qt5"
+
+`
 	// Reset the widget children string
 	p.widgetChildren = ""
 
@@ -39,9 +36,9 @@ func (p *Parser) CompileUiGoObject() error {
 	p.readWidgetNames(p.DesignFile.Widget)
 	p.widgetChildren += "}\n"
 
-	fmt.Println(p.widgetChildren)
+	// TODO: Create the ui setup function
 
-	return nil
+	return header + p.widgetChildren, nil
 }
 
 func (p *Parser) readWidgetNames(widget UiWidget) {
