@@ -31,6 +31,7 @@ type UiSizePolicy struct {
 type UiProperty struct {
 	XMLName        xml.Name     `xml:"property"`
 	Name           string       `xml:"name,attr"`
+	ChildName      string       `xml:",innerxml"`
 	StringData     string       `xml:"string"`
 	DoubleData     float64      `xml:"double"`
 	IntData        int          `xml:"number"`

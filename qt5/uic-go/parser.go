@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 )
 
 type Parser struct {
@@ -153,8 +155,29 @@ func (p *Parser) getGoClassName(qtClassName string) string {
 
 func (p *Parser) getGoFunctionForProperty(property UiProperty) string {
 	// TODO: Parse input and return the correct function stub to set up the property
+	rawChildren := property.ChildName
+	arg := ""
+	if strings.Contains(rawChildren, "string") {
+		arg = "\"" + property.StringData + "\""
+	} else if strings.Contains(rawChildren, "double") {
+		arg = fmt.Sprintf("%f", property.DoubleData)
+	} else if strings.Contains(rawChildren, "number") {
+		arg = fmt.Sprintf("%d", property.IntData)
+	} else if strings.Contains(rawChildren, "bool") {
+		if property.BoolData {
+			arg = "true"
+		} else {
+			arg = "false"
+		}
+	} else if strings.Contains(rawChildren, "rect") {
+		arg = fmt.Sprintf("qt5.Rect{%d, %d, %d, %d}", property.RectData.X, property.RectData.Y, property.RectData.Width, property.RectData.Height)
+	} else if strings.Contains(rawChildren, "sizepolicy") {
+		// TODO
+	} else if strings.Contains(rawChildren, "size") {
+		arg = fmt.Sprintf("qt5.Size{%d, %d}", property.SizeData.Width, property.SizeData.Height)
+	}
 
-	return "tododoodo"
+	return "Set" + upperFirst(property.Name) + "(" + arg + ")"
 }
 
 func NewParser() *Parser {
