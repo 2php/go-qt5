@@ -216,7 +216,7 @@ func (p *Parser) getGoFunctionForProperty(property UiProperty) string {
 	} else if strings.Contains(rawChildren, "rect") {
 		arg = fmt.Sprintf("qt5.Rect{%d, %d, %d, %d}", property.RectData.X, property.RectData.Y, property.RectData.Width, property.RectData.Height)
 	} else if strings.Contains(rawChildren, "sizepolicy") {
-		// TODO
+		arg = fmt.Sprintf("qt5.NewSizePolicyWithPolicy(qt5.%s, qt5.%s, qt5.ControlTypeDefaultType)", property.SizePolicyData.HorizontalSizeType, property.SizePolicyData.VerticalSizeType)
 	} else if strings.Contains(rawChildren, "size") {
 		arg = fmt.Sprintf("qt5.Size{%d, %d}", property.SizeData.Width, property.SizeData.Height)
 	}
