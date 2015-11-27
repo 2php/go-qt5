@@ -27,7 +27,7 @@ func (p *Parser) CompileUiGoObject() (string, error) {
 // Uses the go-qt5 package as its qt5 bindings. 
 // Changes to this file will be overwritten if the compiler is ran again.
 
-package ui
+package main
 
 import "github.com/mpiannucci/go-qt5/qt5"
 
@@ -106,6 +106,8 @@ func (p *Parser) readWidgetProperties(widget UiWidget) {
 		return
 	}
 
+	p.widgetChildren += "w." + upperFirst(widget.Name) + " = " + p.getGoConstructor(widget.Class) + "\n"
+
 	for _, property := range widget.Properties {
 		p.widgetChildren += "w." + upperFirst(widget.Name) + "." + p.getGoFunctionForProperty(property) + "\n"
 	}
@@ -124,6 +126,8 @@ func (p *Parser) readLayoutProperties(layout UiLayout) {
 	if len(layout.Name) == 0 {
 		return
 	}
+
+	p.widgetChildren += "w." + upperFirst(layout.Name) + " = " + p.getGoConstructor(layout.Class) + "\n"
 
 	marginCache := ""
 	for index, property := range layout.Properties {
@@ -195,6 +199,22 @@ func (p *Parser) getGoClassName(qtClassName string) string {
 	}
 
 	return "*qt5." + upperFirst(qtClassName)
+}
+
+func (p *Parser) getGoConstructor(qtClassName string) string {
+	if len(qtClassName) < 1 {
+		return ""
+	}
+
+	// Special case handling cuz a some of the class names are not the same
+	switch qtClassName {
+	case "QPushButton":
+		qtClassName = "Button"
+	default:
+		qtClassName = qtClassName[1:len(qtClassName)]
+	}
+
+	return "qt5.New" + upperFirst(qtClassName) + "()"
 }
 
 func (p *Parser) getGoFunctionForProperty(property UiProperty) string {
