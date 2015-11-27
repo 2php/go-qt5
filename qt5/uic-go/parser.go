@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -124,7 +125,50 @@ func (p *Parser) readLayoutProperties(layout UiLayout) {
 		return
 	}
 
-	for _, property := range layout.Properties {
+	marginCache := ""
+	for index, property := range layout.Properties {
+		marginFlag := false
+		if strings.Contains(property.Name, "Margin") {
+			marginCache += p.getGoFunctionForProperty(property) + ","
+
+			if index != len(layout.Properties)-1 {
+				continue
+			} else {
+				marginFlag = true
+			}
+		}
+
+		if len(marginCache) > 0 {
+			fmt.Println("here")
+			// TODO: Write the full margin function call
+			marginVals := [4]int{-1, -1, -1, -1}
+			margins := strings.Split(marginCache, ",")
+			for _, margin := range margins {
+				index := 0
+				if strings.Contains(margin, "Left") {
+					index = 0
+				} else if strings.Contains(margin, "Top") {
+					index = 1
+				} else if strings.Contains(margin, "Right") {
+					index = 2
+				} else if strings.Contains(margin, "Bottom") {
+					index = 3
+				} else {
+					continue
+				}
+				rawFirstSplit := strings.Split(margin, "(")
+				rawSecondSplit := strings.Split(rawFirstSplit[1], ")")
+				marginVals[index], _ = strconv.Atoi(rawSecondSplit[0])
+			}
+			functionName := fmt.Sprintf("SetMarginsv(%d, %d, %d, %d)", marginVals[0], marginVals[1], marginVals[2], marginVals[3])
+			p.widgetChildren += "w." + upperFirst(layout.Name) + "." + functionName + "\n"
+			marginCache = ""
+		}
+
+		if marginFlag {
+			continue
+		}
+
 		p.widgetChildren += "w." + upperFirst(layout.Name) + "." + p.getGoFunctionForProperty(property) + "\n"
 	}
 
@@ -155,7 +199,7 @@ func (p *Parser) getGoClassName(qtClassName string) string {
 
 func (p *Parser) getGoFunctionForProperty(property UiProperty) string {
 	// TODO: Parse input and return the correct function stub to set up the property
-	rawChildren := property.ChildName
+	rawChildren := property.Children
 	arg := ""
 	if strings.Contains(rawChildren, "string") {
 		arg = "\"" + property.StringData + "\""

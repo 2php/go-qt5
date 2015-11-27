@@ -17,13 +17,9 @@ type Form struct {
 
 func (w *Form) SetupUI(parent *qt5.Widget) {
 	parent.SetGeometry(qt5.Rect{0, 0, 624, 514})
-	parent.SetSizePolicy(qt5.NewSizePolicyWithPolicy(qt5.Expanding, qt5.Expanding, qt5.ControlTypeDefaultType))
 	parent.SetMinimumSize(qt5.Size{10, 10})
 	parent.SetWindowTitle("Form")
-	w.VerticalLayout.SetLeftMargin(15)
-	w.VerticalLayout.SetTopMargin(15)
-	w.VerticalLayout.SetRightMargin(15)
-	w.VerticalLayout.SetBottomMargin(15)
+	w.VerticalLayout.SetMarginsv(15, 15, 15, 15)
 	w.TitleLabel.SetText("This is our test widget")
 	w.VerticalLayout.AddWidget(w.TitleLabel)
 	w.ButtonExample.SetText("Push Me!")
