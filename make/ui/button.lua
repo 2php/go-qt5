@@ -12,7 +12,7 @@ funcs = [[
 @ IsDefault()(b bool)
 @ SetMenu(menu *Menu)
 @ Menu()(menu *Menu)
-* OnClicked(fn func())
+
 ]]
 
 
@@ -34,9 +34,5 @@ SetDefault = "setDefault",
 IsDefault = "isDefault",
 SetMenu = "setMenu",
 Menu = "menu",
-
-OnClicked = [[
-QObject::connect(self,SIGNAL(clicked()),drvNewSignal(self,a1,a2),SLOT(call()));
-]],
 
 }
