@@ -86,6 +86,8 @@ require "ui.uiloader"
 require "multimedia.mediaobject"
 require "multimedia.mediaplaylist"
 
+require "ui.progressbar"
+
 require "makelib"
 
 function make()
@@ -172,6 +174,7 @@ function make()
 
 		def(mediaobject)
 		def(mediaplaylist)
+        def(progressbar)
 
 	end_def()
 
