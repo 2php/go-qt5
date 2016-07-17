@@ -87,6 +87,7 @@ require "multimedia.mediaobject"
 require "multimedia.mediaplaylist"
 
 require "ui.progressbar"
+require "ui.desktopwidget"
 
 require "makelib"
 
@@ -174,7 +175,9 @@ function make()
 
 		def(mediaobject)
 		def(mediaplaylist)
-        def(progressbar)
+
+                def(progressbar)
+		def(desktopwidget)
 
 	end_def()
 
