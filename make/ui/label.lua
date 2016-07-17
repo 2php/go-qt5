@@ -25,6 +25,7 @@ funcs = [[
 @ Indent() (i int)
 @ SetMargin(i int)
 @ Margin() (i int)
+SetBuddy(widget IWidget)
 * OnLinkActivated(fn func(string))
 ]]
 
@@ -67,6 +68,7 @@ SetIndent = "setIndent",
 Indent = "indent",
 SetMargin = "setMargin",
 Margin = "margin",
+SetBuddy = "setBuddy",
 
 OnLinkActivated = [[
 QObject::connect(self,SIGNAL(linkActivated(QString)),drvNewSignal(self,a1,a2),SLOT(call(QString)));
