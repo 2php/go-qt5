@@ -4,7 +4,9 @@
 This is a fork of visualfc's qt4 bindings, and several critical bugs are inherited along the way. Until these bugs are fixed, **this package is not recommended for any real use**.
 I don't have any time to actively work on this project, but I'll keep reviewing and merging pull requests.
 
-Meanwhile, have a look at [QML bindings for Go](https://github.com/niemeyer/qml).
+Some other Qt-related, active go projects:
+* [Qt bindings for Go](https://github.com/therecipe/qt)
+* [QML bindings for Go](https://github.com/niemeyer/qml).
 
 ##Before filing an issue
 * Please read the above section first.
